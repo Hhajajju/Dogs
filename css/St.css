@@ -1,0 +1,75 @@
+
+
+
+.frens-invite {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #1a1a1a; 
+  padding: 10px;
+}
+
+
+.frens-invite-button {
+  background: #333; 
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%; 
+  max-width: 350px; 
+}
+
+.frens-invite-button input {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px; 
+  font-size: 14px; 
+  background: #444;
+  color: #eee;
+  width: 100%; 
+  text-align: center;
+  box-sizing: border-box; 
+}
+
+.frens-invite-button button {
+  background: linear-gradient(135deg, #ffffff, #ffffff); 
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px; 
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  width: 100%; 
+  box-sizing: border-box; 
+}
+
+.frens-invite-button button:hover {
+  background: #777174; 
+  transform: scale(1.05);
+}
+
+.frens-invite-button button:active {
+  background: #c2bcbf; 
+}
+
+
+@media (max-width: 480px) {
+  .frens-invite-button {
+      padding: 8px;
+  }
+
+  .frens-invite-button input {
+      font-size: 12px; 
+  }
+
+  .frens-invite-button button {
+      font-size: 12px; 
+  }
+}
