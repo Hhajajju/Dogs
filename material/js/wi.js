@@ -1,27 +1,66 @@
+let userBalance = 1000;  // Initial user balance (can be updated dynamically)
+        let withdrawalStatus = "No withdrawal made"; // Initial status
+        let currentWithdrawal = null; // To hold the current withdrawal request
 
-        document.getElementById("withdrawalForm").addEventListener("submit", function(event) {
+        document.getElementById('withdrawalForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            let withdrawAmount = document.getElementById("withdrawAmount").value;
-            let userBalance = parseInt(document.getElementById("user-balance").innerText);
 
+            const withdrawAmount = parseInt(document.getElementById('withdrawAmount').value);
+            const address = document.getElementById('address').value;
+
+            // Check if withdrawal amount meets the minimum requirement
             if (withdrawAmount < 1000) {
-                alert("Minimum withdrawal is 1000 DOGS");
+                alert("Minimum withdrawal amount is 1000 DOGS.");
                 return;
             }
 
+            // Check if user has enough balance
             if (withdrawAmount > userBalance) {
-                alert("Insufficient balance");
+                alert("Insufficient balance.");
                 return;
             }
 
-            // Submit withdrawal request (this would be handled by your backend)
-            document.getElementById("withdrawStatus").innerText = "Withdrawal request submitted. Awaiting admin approval...";
-            // Update balance after request (you would update this with backend data)
-            document.getElementById("user-balance").innerText = userBalance - withdrawAmount;
+            // Update status to pending
+            withdrawalStatus = `Withdrawal of ${withdrawAmount} DOGS pending.`;
+            currentWithdrawal = {
+                amount: withdrawAmount,
+                address: address,
+                status: "pending"
+            };
 
-             // Here you would send data to the server to process the withdrawal (using AJAX or a backend)
-            // For now, we're simulating a backend response
-            setTimeout(() => {
-                alert("Your withdrawal is now under admin review.");
-            }, 1000);
-        });                                                      
+            updateStatus();
+
+            // Simulate admin approval/rejection after a delay (admin decision made outside of this interface)
+            alert("Your withdrawal request is now pending. Wait for admin approval.");
+        });
+
+        function updateStatus() {
+            document.getElementById('withdrawStatus').textContent = withdrawalStatus;
+        }
+
+        // Simulated Admin Approval/Reject functions
+        function adminApprove() {
+            if (currentWithdrawal && currentWithdrawal.status === "pending") {
+                withdrawalStatus = `Withdrawal of ${currentWithdrawal.amount} DOGS paid.`;
+                userBalance -= currentWithdrawal.amount; // Deduct the withdrawn amount from user balance
+                document.getElementById('user-balance').textContent = userBalance; // Update balance
+                currentWithdrawal.status = "paid"; // Set status as paid
+                updateStatus();
+            } else {
+                alert("No pending withdrawal request.");
+            }
+        }
+
+        function adminReject() {
+            if (currentWithdrawal && currentWithdrawal.status === "pending") {
+                withdrawalStatus = `Withdrawal of ${currentWithdrawal.amount} DOGS rejected.`;
+                currentWithdrawal.status = "rejected"; // Set status as rejected
+                updateStatus();
+            } else {
+                alert("No pending withdrawal request.");
+            }
+        }
+// Update the withdrawal status in the UI
+        function updateStatus() {
+            document.getElementById('withdrawStatus').textContent = withdrawalStatus;
+        }
