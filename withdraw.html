@@ -1,1 +1,80 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Withdrawal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .withdrawal-form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .withdrawal-form input, .withdrawal-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .status {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="withdrawal-form">
+        <h2>Withdrawal Request</h2>
+        <p>Your current balance: <span id="user-balance">1000</span> DOGS</p>
+        <p>Minimum Withdrawal: 1000 DOGS</p>
+
+        <form id="withdrawalForm" action="#" method="POST">
+            <label for="withdrawAmount">Amount (DOGS):</label>
+            <input type="number" id="withdrawAmount" name="withdrawAmount" min="1000" required>
+            
+            <label for="address">DOGS Address:</label>
+            <input type="text" id="address" name="address" required>
+
+            <button type="submit" id="withdrawButton">Withdraw</button>
+        </form>
+
+        <div id="withdrawStatus" class="status">No withdrawal made</div>
+    </div>
+
+    <script>
+        document.getElementById("withdrawalForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let withdrawAmount = document.getElementById("withdrawAmount").value;
+            let userBalance = parseInt(document.getElementById("user-balance").innerText);
+
+            if (withdrawAmount < 1000) {
+                alert("Minimum withdrawal is 1000 DOGS");
+                return;
+            }
+
+            if (withdrawAmount > userBalance) {
+                alert("Insufficient balance");
+                return;
+            }
+
+            // Submit withdrawal request (this would be handled by your backend)
+            document.getElementById("withdrawStatus").innerText = "Withdrawal request submitted. Awaiting admin approval...";
+            // Update balance after request (you would update this with backend data)
+            document.getElementById("user-balance").innerText = userBalance - withdrawAmount;
+
+            // Here you would send data to the server to process the withdrawal (using AJAX or a backend)
+            // For now, we're simulating a backend response
+            setTimeout(() => {
+                alert("Your withdrawal is now under admin review.");
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
