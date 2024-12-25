@@ -1,84 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdraw</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="material/css/wi.css">
+    <title>Withdrawal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-        }
-        .withdrawal-form {
-            width: 300px;
-            margin: 0 auto;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
         }
-        .withdrawal-form input, .withdrawal-form button {
-            width: 100%;
+        #withdrawal-status {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        button {
             padding: 10px;
             margin: 10px 0;
+            cursor: pointer;
+            font-size: 16px;
         }
-        .status {
-            text-align: center;
-            font-weight: bold;
+        input[type="number"], input[type="text"] {
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 16px;
+            width: 200px;
         }
     </style>
 </head>
 <body>
 
-    <div class="withdrawal-form">
-        <h2>Withdrawal Request</h2>
-        <p>Your current balance: <span id="user-balance">1000</span> DOGS</p>
-        <p>Minimum Withdrawal: 1000 DOGS</p>
+    <h1>Withdrawal</h1>
 
-        <form id="withdrawalForm" action="#" method="POST">
-            <label for="withdrawAmount">Amount (DOGS):</label>
-            <input type="number" id="withdrawAmount" name="withdrawAmount" min="1000" required>
-            
-            <label for="address">DOGS Address:</label>
-            <input type="text" id="address" name="address" required>
-
-            <button type="submit" id="withdrawButton">Withdraw</button>
-        </form>
-
-        <div id="withdrawStatus" class="status">No withdrawal made</div>
+    <div>
+        <label for="amount">Withdrawal Amount (DOGS): </label>
+        <input type="number" id="amount" placeholder="Enter amount" min="1" />
     </div>
-</section>
+    
+    <div>
+        <label for="dogsAddress">DOGS Address: </label>
+        <input type="text" id="dogsAddress" placeholder="Enter your DOGS address" />
+    </div>
+    
+    <button id="withdrawal-btn">Request Withdrawal</button>
+    <button id="check-status-btn">Check Withdrawal Status</button>
 
+    <div id="withdrawal-status">Withdrawal Status: Not requested yet.</div>
 
-        <nav class="bottom-nav">
-            <a href="home.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>HOME</span>
-            </a>
-            <a href="leaderboard.html" class="nav-item">
-                <i class="fas fa-trophy"></i>
-                <span>LEADERBOARD</span>
-            </a>
-            <a href="invite-friends.html" class="nav-item">
-                <i class="fas fa-user-friends"></i>
-                <span>FRIENDS</span>
-            </a>
-            <a href="task.html" class="nav-item">
-                <i class="fas fa-tasks"></i>
-                <span>TASKS</span>
-            </a>
-            <a href="balance.html" class="nav-item">
-                <i class="fas fa-wallet"></i>
-                <span>BALANCE</span>
-            </a>
-            <a href="withdraw.html" class="nav-item">
-                <i class="fas fa-trophy"></i>
-                <span>WITHDRAW</span>
-            </a>
-        </nav>
-
-    <script src="material/js/wi.js"></script>
-    <script src="material/js/main.js"></script>
 </body>
 </html>
