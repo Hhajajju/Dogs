@@ -1,1 +1,63 @@
+/* Footer Background */
+footer.footer {
+    display: flex;
+    justify-content: space-around;  /* Distribute sections evenly */
+    background-color: black;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Style for each section */
+footer .section {
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    flex: 1;  /* Makes sure each section takes equal space */
+}
+
+/* Style for icons */
+footer .section i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+/* Style for text below the icons */
+footer .section span {
+    display: block;
+    font-size: 12px;
+}
+
+/* Hover Effect */
+footer .section:hover {
+    color: #FFD700;  /* Gold color for hover effect */
+}
+
+footer .section:hover i {
+    color: #FFD700;  /* Gold color for icons on hover */
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 600px) {
+    footer.footer {
+        flex-direction: column;  /* Stack sections vertically on small screens */
+        align-items: center;  /* Center the sections */
+    }
+
+    footer .section {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    footer .section i {
+        font-size: 30px;  /* Larger icons on small screens */
+    }
+
+    footer .section span {
+        font-size: 14px;
+    }
+}
 
