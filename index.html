@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     <script src='//niphaumeenses.net/vignette.min.js' data-zone='8694372' data-sdk='show_8694372'></script>
+    <script async src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
       
         body, html {
@@ -61,6 +62,27 @@
     </div>
     <script> show_8694372().then(() => { // You need to add your user reward function here, which will be executed after the user watches the ad. // For more details, please refer to the detailed instructions. alert('You have seen ad ad!'); })
  </script>
+<script>
+    Telegram.WebApp.ready(); 
+    Telegram.WebApp.setTitle("CLAIM FREE DOGS");
+    Telegram.WebApp.setBackgroundColor("#000000"); // Black background
+    Telegram.WebApp.setHeaderColor("#ff5733"); // Example header color
+
+    // Show the main button (the button at the bottom of the Web App)
+    Telegram.WebApp.MainButton.show();
+    Telegram.WebApp.MainButton.setText("Launch");
+
+    // Optionally, handle button clicks
+    Telegram.WebApp.MainButton.onClick(() => {
+        console.log("Button clicked!");
+        // You can use this to trigger some actions or send messages
+    });
+</script>
+    <script>
+    // Wait for the Telegram Web App to be ready
+    Telegram.WebApp.ready();
+</script>
+
 
     <script>
        
