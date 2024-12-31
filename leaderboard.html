@@ -12,7 +12,7 @@
     <!-- Telegram WebApp Lib -->
     <script type="text/javascript" src="/material/js/telegram-web-app.js"></script>
     <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
-          <script>
+    <script>
             window.TelegramAdsController = new TelegramAdsController();
             window.TelegramAdsController.initialize({
               pubId: "953456",
@@ -364,7 +364,10 @@ img {
             </a>
             
         </nav> 
-
+    <script>
+    // Wait for the Telegram Web App to be ready
+    Telegram.WebApp.ready();
+</script>
     <script src="material/js/js.js"></script>
     <script src="material/js/main.js"></script>
 </body>
