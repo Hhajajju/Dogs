@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Tasks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="material/css/styles.css">
+    <link rel="stylesheet" href="material/css/section.css">
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    
+    <script src="//niphaumeenses.net/vignette.min.js" data-zone="8694372" data-sdk="show_8694372"></script>
+    
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+}
+
+h1, h2, p {
+    margin: 20px 0;
+}
+
+.medal-icon {
+    width: 80%;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    width: 80%;
+    background-color: #555;
+    height: 18px;
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000000;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.nav-item {
+    color: #fff;
+    text-decoration: none;
+    font-size: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-item i {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.nav-item span {
+    font-size: 10px;
+}
+
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #000000;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.task-icon {
+    width: 40px;
+    margin-right: 10px;
+}
+.task p {
+    font-size: 11px;
+}
+.task button {
+    shape-margin: 0cap;
+    color: #000000;
+    background-color: rgb(255, 255, 255);
+}
+
+.hidden {
+    display: none;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #000; 
+            color: #fff; 
+            margin: 0;
+            padding: 0;
+        }
+
+        #balance-container {
+            margin: 20px;
+            font-size: 18px;
+        }
+
+        .task-container {
+            margin: 10px auto;
+            max-width: 600px;
+        }
+
+        .task {
+            margin: 10px auto;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000000; 
+            border-radius: 12px;
+            background-color: #333030; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            width: 80%;
+        }
+
+        .task:hover {
+            transform: translateY(-5px);
+        }
+
+        .task-detail {
+            display: flex;
+            align-items: center;
+        }
+
+        .task-image img {
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+
+        .task h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #f2f2f2;
+        }
+
+        .task-data {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .task-data img {
+            margin-right: 5px;
+        }
+
+        .task-data h5 {
+            margin: 0;
+            color: #ffcc00;
+            font-size: 18px;
+        }
+
+        .task-button {
+            background-color: #ffffff; 
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .task-button:hover {
+            background-color: #a2aaa0;
+        }
+        .tasks.scrollable {
+            max-height: 590px; 
+            overflow-y: auto; 
+            margin: 20px auto;
+            width: 90%;       
+            padding-right: 10px;
+            border: 1px solid #000000; 
+        }
+        @media (max-width: 600px) {
+            .task-container {
+                max-width: 100%;
+            }
+
+            .task-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .task h4 {
+                font-size: 16px;
+     body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+}
+
+h1, h2, p {
+    margin: 20px 0;
+}
+
+.medal-icon {
+    width: 80%;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    width: 80%;
+    background-color: #555;
+    height: 18px;
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000000;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.nav-item {
+    color: #fff;
+    text-decoration: none;
+    font-size: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-item i {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.nav-item span {
+    font-size: 10px;
+}
+
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #000000;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.task-icon {
+    width: 40px;
+    margin-right: 10px;
+}
+.task p {
+    font-size: 11px;
+}
+.task button {
+    shape-margin: 0cap;
+    color: #000000;
+    background-color: rgb(255, 255, 255);
+}
+
+.hidden {
+    display: none;
+}
+       }
+        }
+
+
+/* Footer Background */
+footer.footer {
+    display: flex;
+    justify-content: space-between;  /* Ensure sections are spaced evenly */
+    background-color: black;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    z-index: 1000;
+    flex-wrap: wrap; /* Allow wrapping if the screen is very narrow */
+}
+
+/* Style for each section */
+footer .section {
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    flex: 1;  /* Ensures each section takes equal space */
+    padding: 5px;
+    min-width: 100px;  /* Ensures each section has a minimum width */
+}
+
+/* Style for icons */
+footer .section i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+/* Style for text below the icons */
+footer .section span {
+    display: block;
+    font-size: 12px;
+}
+
+/* Hover Effect */
+footer .section:hover {
+    color: #FFD700;  /* Gold color for hover effect */
+}
+
+footer .section:hover i {
+    color: #FFD700;  /* Gold color for icons on hover */
+}
+
+/* Make sure the logo appears centered at the top */
+img {
+    display: block;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Responsive Design: Adjust for smaller screens while keeping items horizontally aligned */
+@media (max-width: 768px) {
+    footer.footer {
+        justify-content: space-around;  /* Space items more evenly on smaller screens */
+    }
+
+    footer .section {
+        font-size: 16px;
+        padding: 10px 5px;
+    }
+
+    footer .section i {
+        font-size: 30px;  /* Larger icons on small screens */
+    }
+
+    footer .section span {
+        font-size: 14px;
+    }
+}
+        
+    </style>
+</head>    
+<body>
+   
+
+    <div id="balance-container">
+        <h2><b>_____________</b></h2>
+
+        <h2><b> TASKS </b></h2>
+    
+        <span id="balance">0</span>  🦴 total dogs
+    </div>
+    <h2><b>_______________</b></h2>
+
+    <section class="tasks scrollable">
+    <div class="task-container">
+        <div class="task">
+            <div class="task-detail">
+                <div class="task-image">
+                    <img src="material/images/video.png" width="45px" alt="">
+                </div>
+                <div>
+                    <h4>watch video</h4>
+                    <div class="task-data">
+                        <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                        <h5>20</h5>
+                    </div>
+                </div>
+            </div>
+            <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698009')">🦴 claim</button>
+        </div>
+    
+        <div class="task-container">
+            <div class="task">
+                <div class="task-detail">
+                    <div class="task-image">
+                        <img src="material/images/video.png" width="45px" alt="">
+                    </div>
+                    <div>
+                        <h4>watch video</h4>
+                        <div class="task-data">
+                            <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                            <h5>20</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698005')">🦴 claim</button>
+            
+      
+            </div>
+            <div class="task-container">
+                <div class="task">
+                    <div class="task-detail">
+                        <div class="task-image">
+                            <img src="material/images/video.png" width="45px" alt="">
+                        </div>
+                        <div>
+                            <h4>watch video</h4>
+                            <div class="task-data">
+                                <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                <h5>20</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698004')">🦴 claim</button>
+                </div>
+                <div class="task-container">
+                    <div class="task">
+                        <div class="task-detail">
+                            <div class="task-image">
+                                <img src="material/images/video.png" width="45px" alt="">
+                            </div>
+                            <div>
+                                <h4>watch video</h4>
+                                <div class="task-data">
+                                    <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                    <h5>20</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698003')">🦴 claim</button>
+                    </div>
+                    <div class="task-container">
+                        <div class="task">
+                            <div class="task-detail">
+                                <div class="task-image">
+                                    <img src="material/images/video.png" width="45px" alt="">
+                                </div>
+                                <div>
+                                    <h4>watch video</h4>
+                                    <div class="task-data">
+                                        <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                        <h5>20</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698002')">🦴 claim</button>
+                        </div>
+
+                        <div class="task-container">
+                            <div class="task">
+                                <div class="task-detail">
+                                    <div class="task-image">
+                                        <img src="material/images/video.png" width="45px" alt="">
+                                    </div>
+                                    <div>
+                                        <h4>watch video</h4>
+                                        <div class="task-data">
+                                            <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                            <h5>20</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698001')">🦴 claim</button>
+                            </div>
+                            <div class="task-container">
+                                <div class="task">
+                                    <div class="task-detail">
+                                        <div class="task-image">
+                                            <img src="material/images/video.png" width="45px" alt="">
+                                        </div>
+                                        <div>
+                                            <h4>watch video</h4>
+                                            <div class="task-data">
+                                                <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                                <h5>20</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8698000')">🦴 claim</button>
+                                </div>
+                                <div class="task-container">
+                                    <div class="task">
+                                        <div class="task-detail">
+                                            <div class="task-image">
+                                                <img src="material/images/video.png" width="45px" alt="">
+                                            </div>
+                                            <div>
+                                                <h4>watch video</h4>
+                                                <div class="task-data">
+                                                    <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                                    <h5>20</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8694387')">🦴 claim</button>
+                                    </div>
+                                    <div class="task-container">
+                                        <div class="task">
+                                            <div class="task-detail">
+                                                <div class="task-image">
+                                                    <img src="material/images/video.png" width="45px" alt="">
+                                                </div>
+                                                <div>
+                                                    <h4>watch video</h4>
+                                                    <div class="task-data">
+                                                        <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                                                        <h5>20</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8694380')">🦴 claim</button>
+                                        </div>
+                                        
+                                        <div class="task-container">
+            <div class="task">
+                <div class="task-detail">
+                    <div class="task-image">
+                        <img src="material/images/video.png" width="45px" alt="">
+                    </div>
+                    <div>
+                        <h4>watch video</h4>
+                        <div class="task-data">
+                            <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                            <h5>20</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="task-button" onclick="completeTask(20, 'https://whomeenoaglauns.com/4/8694386')">🦴 claim</button>
+            </div>
+
+               <div class="task-container">
+            <div class="task">
+                <div class="task-detail">
+                    <div class="task-image">
+                        <img src="material/images/tele.png" width="45px" alt="">
+                    </div>
+                    <div>
+                        <h4>join channel</h4>
+                        <div class="task-data">
+                            <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                            <h5>20</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="task-button" onclick="completeTask(20, 'https://t.me/claim_dogs')">🦴 claim</button>
+            </div> 
+            
+            
+          <div class="task-container">
+    <div class="task">
+        <div class="task-detail">
+            <div class="task-image">
+                <img src="material/images/tele.png" width="45px" alt="">
+            </div>
+            <div>
+                <h4>WATCH ADS</h4>
+                <div class="task-data">
+                    <img src="material/images/logo.png" width="20px" alt="Coin Icon">
+                    <h5>20</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Pass 'this' to reference the button element -->
+        <button class="task-button" onclick="handleTaskCompletion(20, this)">🦴 Watch Ads</button>
+    </div>
+</div>
+
+                    </section>
+
+
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>HOME</span>
+            </a>
+            <a href="leaderboard.html" class="nav-item">
+                <i class="fas fa-trophy"></i>
+                <span>LEADERBOARD</span>
+            </a>
+            <a href="invite-friends.html" class="nav-item">
+                <i class="fas fa-user-friends"></i>
+                <span>FRIENDS</span>
+            </a>
+            <a href="task.html" class="nav-item">
+                <i class="fas fa-tasks"></i>
+                <span>TASKS</span>
+            </a>
+            <a href="balance.html" class="nav-item">
+                <i class="fas fa-wallet"></i>
+                <span>BALANCE</span>
+            </a>
+    </nav>  
+    <script>
+    // Wait for the Telegram Web App to be ready
+    Telegram.WebApp.ready();
+</script>
+    <script src="material/js/js.js"></script>
+    <script src="material/js/main.js"></script>
+    
+   <script>
+    function handleTaskCompletion(rewardAmount, button) {
+        // Disable the button and start the countdown
+        button.disabled = true;
+        let countdownTime = 60; // 60 seconds
+
+        // Update button text every second
+        const countdownInterval = setInterval(() => {
+            if (countdownTime > 0) {
+                button.textContent = `Wait ${countdownTime--}s`;
+            } else {
+                // Re-enable the button and reset the text after the countdown ends
+                clearInterval(countdownInterval);
+                button.disabled = false;
+                button.textContent = "🦴 Claim";
+            }
+        }, 1000);
+
+        // Trigger the ad display
+        show_8694372().then(() => {
+            // Ad watched successfully; proceed with reward
+            alert('You have watched the ad!');
+
+            // Retrieve current coin balance from localStorage
+            let currentBalance = parseInt(localStorage.getItem('coinBalance')) || 0;
+
+            // Update the coin balance
+            currentBalance += rewardAmount;
+
+            // Store the updated balance back in localStorage
+            localStorage.setItem('coinBalance', currentBalance);
+
+            // Update the UI to reflect the new balance
+            document.getElementById('balance').textContent = currentBalance;
+        }).catch((error) => {
+            // Handle any errors that occur during ad display
+            console.error('Error displaying ad:', error);
+            alert('An error occurred while displaying the ad.');
+        });
+    }
+</script>
+                
+</body>
+</html>
