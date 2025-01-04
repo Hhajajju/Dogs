@@ -1,4 +1,3 @@
-<script>
     // Retrieve balance from localStorage
     let balance = parseInt(localStorage.getItem('balance')) || 0;
 
@@ -114,4 +113,3 @@
 
     // Initialize balance display on page load
     updateBalance();
-</script>
