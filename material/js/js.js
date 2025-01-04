@@ -1,32 +1,8 @@
-    // Retrieve balance from localStorage
-    let balance = parseInt(localStorage.getItem('balance')) || 0;
+<script>
+    // Initialize balance variable (this can be moved if you prefer state management)
+    let balance = 0;
 
-    // Update balance function
-    function updateBalance() {
-        document.getElementById('balance').textContent = balance;
-    }
-
-    // Function to complete a task
-    function completeTask(reward, taskUrl) {
-        // Check if the task has already been completed
-        if (localStorage.getItem(taskUrl) === 'true') {
-            alert('You have already completed this task.');
-            return;
-        }
-
-        // Add the reward to the balance
-        balance += reward;
-        updateBalance();
-
-        // Mark the task as completed
-        localStorage.setItem(taskUrl, 'true');
-        localStorage.setItem('balance', balance);
-
-        // Open the task URL in a new tab
-        window.open(taskUrl, '_blank');
-    }
-
-    // Handle task completion with a countdown
+    // Function to handle task completion and reward
     function handleTaskCompletion(rewardAmount, button) {
         // Disable the button and start the countdown
         button.disabled = true;
@@ -44,7 +20,7 @@
             }
         }, 1000);
 
-        // Trigger the ad display
+        // Trigger the ad display (replace with actual ad function)
         show_8694372().then(() => {
             // Create a cleaner notification with the site's color scheme
             const notificationBox = document.createElement('div');
@@ -93,17 +69,11 @@
             notificationBox.appendChild(okButton);
             document.body.appendChild(notificationBox);
 
-            // Retrieve current coin balance from localStorage
-            let currentBalance = parseInt(localStorage.getItem('coinBalance')) || 0;
-
             // Update the coin balance
-            currentBalance += rewardAmount;
-
-            // Store the updated balance back in localStorage
-            localStorage.setItem('coinBalance', currentBalance);
+            balance += rewardAmount;
 
             // Update the UI to reflect the new balance
-            document.getElementById('balance').textContent = currentBalance;
+            document.getElementById('balance').textContent = balance;
         }).catch((error) => {
             // Handle any errors that occur during ad display
             console.error('Error displaying ad:', error);
@@ -111,5 +81,5 @@
         });
     }
 
-    // Initialize balance display on page load
-    updateBalance();
+    // You can directly call this function in the context of your tasks in main.js
+</script>
