@@ -1,4 +1,5 @@
 let balance = parseInt(localStorage.getItem('balance')) || 0;
+let adTimers = JSON.parse(localStorage.getItem('adTimers')) || {};
 
 function completeTask(reward, taskUrl) {
     if (localStorage.getItem(taskUrl) === 'true') {
@@ -21,10 +22,21 @@ function updateBalance() {
 
 updateBalance();
 
-function handleTaskCompletion(rewardAmount, button) {
+function handleTaskCompletion(rewardAmount, button, adId) {
+    // Check if the ad was clicked previously and the cooldown timer has expired
+    let adTimer = adTimers[adId] || 0;
+    let currentTime = Date.now();
+    let cooldownTime = 60000; // 60 seconds cooldown
+
+    if (currentTime - adTimer < cooldownTime) {
+        let remainingTime = Math.ceil((cooldownTime - (currentTime - adTimer)) / 1000);
+        showAlert(`Please wait ${remainingTime} more seconds before you can claim again.`);
+        return;
+    }
+
     // Disable the button and start the countdown
     button.disabled = true;
-    let countdownTime = 60; // 60 seconds
+    let countdownTime = 60; // 60 seconds for ad watch
 
     // Update button text every second
     const countdownInterval = setInterval(() => {
@@ -98,6 +110,10 @@ function handleTaskCompletion(rewardAmount, button) {
 
         // Update the UI to reflect the new balance
         document.getElementById('balance').textContent = currentBalance;
+
+        // Update the ad timer for this adId
+        adTimers[adId] = Date.now();
+        localStorage.setItem('adTimers', JSON.stringify(adTimers));
     }).catch((error) => {
         // Handle any errors that occur during ad display
         console.error('Error displaying ad:', error);
