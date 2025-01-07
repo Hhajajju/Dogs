@@ -80,4 +80,4 @@
             console.error('Error displaying ad:', error);
             alert('An error occurred while displaying the ad.');
         });
-           }                                    </
+           }                                 
