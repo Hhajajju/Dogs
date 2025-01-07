@@ -703,13 +703,13 @@ img {
             notificationBox.appendChild(okButton);
             document.body.appendChild(notificationBox);
 
-            // Retrieve current coin balance from main.js
+            // Retrieve current coin balance from local storage
             let currentBalance = parseInt(localStorage.getItem('coinBalance')) || 0;
 
             // Update the coin balance
             currentBalance += rewardAmount;
 
-            // Store the updated balance back in main.js
+            // Store the updated balance back in local storage
             localStorage.setItem('coinBalance', currentBalance);
 
             // Update the UI to reflect the new balance
