@@ -27,8 +27,18 @@ function completeTask(reward, taskUrl) {
     window.open(taskUrl, '_blank');
 }
 
-// New ad functionality with countdown and notification
+// New ad functionality with countdown, notification, and storage for the ad timer
 function handleTaskCompletion(rewardAmount, button) {
+    // Retrieve the last ad completion time from localStorage
+    const lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
+    const currentTime = Date.now();
+    const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime); // 60 seconds cooldown for the ad
+
+    if (remainingTime > 0) {
+        showAlert(`You need to wait ${Math.ceil(remainingTime / 1000)} seconds before watching the ad again.`);
+        return;
+    }
+
     // Disable the button and start the countdown
     button.disabled = true;
     let countdownTime = 60; // 60 seconds cooldown
@@ -47,7 +57,22 @@ function handleTaskCompletion(rewardAmount, button) {
 
     // Trigger the ad display
     show_8694372().then(() => {
-        // Create a cleaner notification with the site's color scheme
+        // After ad completion, give the reward and update ad completion time
+        let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
+
+        // Update the coin balance
+        currentBalance += rewardAmount;
+
+        // Store the updated balance back in localStorage
+        localStorage.setItem('balance', currentBalance);
+
+        // Update the UI to reflect the new balance
+        document.getElementById('balance').textContent = currentBalance;
+
+        // Store the current time as the last ad completion time
+        localStorage.setItem('lastAdTime', currentTime);
+
+        // Show the notification after watching the ad
         const notificationBox = document.createElement('div');
         notificationBox.style.position = 'fixed';
         notificationBox.style.top = '50%';
@@ -93,18 +118,6 @@ function handleTaskCompletion(rewardAmount, button) {
         notificationBox.appendChild(message);
         notificationBox.appendChild(okButton);
         document.body.appendChild(notificationBox);
-
-        // Retrieve current coin balance from localStorage
-        let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
-
-        // Update the coin balance
-        currentBalance += rewardAmount;
-
-        // Store the updated balance back in localStorage
-        localStorage.setItem('balance', currentBalance);
-
-        // Update the UI to reflect the new balance
-        document.getElementById('balance').textContent = currentBalance;
     }).catch((error) => {
         // Handle any errors that occur during ad display
         console.error('Error displaying ad:', error);
