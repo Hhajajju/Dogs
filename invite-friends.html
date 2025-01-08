@@ -167,6 +167,57 @@
             margin: 10px 0;
         }
 
+        /* Styling for the Copy Link Button and Link */
+        #link {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            width: 70%;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        #copyButton {
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #copyButton:hover {
+            background-color: #ddd;
+        }
+
+        /* Referral List Styling */
+        .referral-list {
+            margin-top: 30px;
+            color: #fff;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .referral-list li {
+            background-color: #333;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        /* Logo under the Referral List */
+        .referral-logo-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             footer.footer {
@@ -191,18 +242,24 @@
 <body>
     <img src="material/images/freinds.png" width="60px" alt="">
     <div class="referral-info">
-            <div id="balance-container">
-        <span id="balance">0</span> 🦴 total dogs
-    </div><br>
-    <h2><u><b>Refferal</b></u></h2>
+        <div id="balance-container">
+            <span id="balance">0</span> 🦴 total dogs
+        </div><br>
+        <h2><u><b>Referral</b></u></h2>
 
         <p>Earn 200 DOGS per Referral!</p>
     </div>
 
- 
-            <input type="text" value="https://t.me/CLAIMDOGSS_BOT?start=1718299021932432" id="link" readonly>
-            <button id="copyButton">Copy Link</button>
-        </div>
+    <input type="text" value="https://t.me/CLAIMDOGSS_BOT?start=1718299021932432" id="link" readonly>
+    <button id="copyButton">Copy Link</button>
+
+    <!-- Referral List -->
+    <ul class="referral-list">
+    
+
+    <!-- Referral Logo -->
+    <div class="referral-logo-container">
+        <img src="material/images/logo.png" width="60px" alt="">
     </div>
 
     <nav class="bottom-nav">
