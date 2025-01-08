@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Tasks</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="material/css/styles.css">
-    <link rel="stylesheet" href="material/css/section.css">
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
-<style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -78,14 +76,15 @@
             font-size: 18px;
         }
 
+        /* Style for the Connect button */
         .task-button {
             background-color: #ffffff; 
             color: rgb(0, 0, 0);
             border: none;
-            padding: 10px 20px;
+            padding: 12px 40px;
             font-size: 16px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 50px; /* This creates the oval shape */
             transition: background-color 0.3s ease;
         }
 
@@ -106,192 +105,57 @@
             .task h4 {
                 font-size: 16px;
             }
-           
-            
         }
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
 
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    text-align: left;
-}
+        /* Footer and navigation styles */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #000000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
 
-h1, h2, p {
-    margin: 20px 0;
-}
+        .nav-item {
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.medal-icon {
-    width: 80%;
-    margin: 20px 0;
-}
+        .nav-item i {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
 
-.progress-bar {
-    width: 80%;
-    background-color: #555;
-    height: 18px;
-    margin: 20px auto;
-    border-radius: 5px;
-}
+        .nav-item span {
+            font-size: 10px;
+        }
 
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000000;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-.nav-item {
-    color: #fff;
-    text-decoration: none;
-    font-size: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-item i {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.nav-item span {
-    font-size: 10px;
-}
-
-
-.task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #000000;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.task-icon {
-    width: 40px;
-    margin-right: 10px;
-}
-.task p {
-    font-size: 11px;
-}
-.task button {
-    shape-margin: 0cap;
-    color: #000000;
-    background-color: rgb(255, 255, 255);
-}
-
-.hidden {
-    display: none;
-}
-
-        /* Footer Background */
-footer.footer {
-    display: flex;
-    justify-content: space-between;  /* Ensure sections are spaced evenly */
-    background-color: black;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    z-index: 1000;
-    flex-wrap: wrap; /* Allow wrapping if the screen is very narrow */
-}
-
-/* Style for each section */
-footer .section {
-    color: white;
-    text-align: center;
-    font-size: 14px;
-    flex: 1;  /* Ensures each section takes equal space */
-    padding: 5px;
-    min-width: 100px;  /* Ensures each section has a minimum width */
-}
-
-/* Style for icons */
-footer .section i {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-/* Style for text below the icons */
-footer .section span {
-    display: block;
-    font-size: 12px;
-}
-
-/* Hover Effect */
-footer .section:hover {
-    color: #FFD700;  /* Gold color for hover effect */
-}
-
-footer .section:hover i {
-    color: #FFD700;  /* Gold color for icons on hover */
-}
-
-/* Make sure the logo appears centered at the top */
-img {
-    display: block;
-    margin: 0 auto;
-    padding: 20px 0;
-}
-
-/* Responsive Design: Adjust for smaller screens while keeping items horizontally aligned */
-@media (max-width: 768px) {
-    footer.footer {
-        justify-content: space-around;  /* Space items more evenly on smaller screens */
-    }
-
-    footer .section {
-        font-size: 16px;
-        padding: 10px 5px;
-    }
-
-    footer .section i {
-        font-size: 30px;  /* Larger icons on small screens */
-    }
-
-    footer .section span {
-        font-size: 14px;
-    }
-}
     </style> 
 </head>
-    
 <body>
     <br>
 
-    <div id="balance-container"><h2><b>💸</b></h2><BR>
+    <div id="balance-container"><h2><b>💸</b></h2><br>
         <span id="balance">0</span> 🦴 your total dogs
-        <br>    <br>
-    </div><h2><b>comming soon !!</b></h2>
+        <br><br>
+    </div><h2><b>Minimum withdraw 10,000 dogs !!</b></h2>
    
-    
     <br>
        
-        <a href="detail.html" class="nav-item"> 
-            <i class="fas fa-info-circle"></i> 
-            
-           <span>DETAILS</span>
-        </a>
+    <a href="detail.html" class="nav-item"> 
+        <i class="fas fa-info-circle"></i> 
+        <span>DETAILS</span>
+    </a>
         
-       <BR>
+    <br>
     <div class="task-container">
         <div class="task">
             <div class="task-detail">
@@ -306,41 +170,38 @@ img {
                     </div>
                 </div>
             </div>
-           <button onclick="window.location.href='wat.html'">CONNECT</button>
-        
-        </section>
-            
+            <button onclick="window.location.href='wat.html'" class="task-button">CONNECT</button>
         </div>
-        <br> <br>
-        <img src="material/images/logo.png" width="50%">
-                <nav class="bottom-nav">
-            <a href="home.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>HOME</span>
-            </a>
-            <a href="leaderboard.html" class="nav-item">
-                <i class="fas fa-trophy"></i>
-                <span>LEADERBOARD</span>
-            </a>
-            <a href="invite-friends.html" class="nav-item">
-                <i class="fas fa-user-friends"></i>
-                <span>FRIENDS</span>
-            </a>
-            <a href="task.html" class="nav-item">
-                <i class="fas fa-tasks"></i>
-                <span>TASKS</span>
-            </a>
-            <a href="balance.html" class="nav-item">
-                <i class="fas fa-wallet"></i>
-                <span>BALANCE</span>
-            </a>
-        </nav>
+    </div>
+    <br> <br>
+    <img src="material/images/logo.png" width="50%">
+
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>HOME</span>
+        </a>
+        <a href="leaderboard.html" class="nav-item">
+            <i class="fas fa-trophy"></i>
+            <span>LEADERBOARD</span>
+        </a>
+        <a href="invite-friends.html" class="nav-item">
+            <i class="fas fa-user-friends"></i>
+            <span>FRIENDS</span>
+        </a>
+        <a href="task.html" class="nav-item">
+            <i class="fas fa-tasks"></i>
+            <span>TASKS</span>
+        </a>
+        <a href="balance.html" class="nav-item">
+            <i class="fas fa-wallet"></i>
+            <span>BALANCE</span>
+        </a>
+    </nav>
+
     <script>
-    // Wait for the Telegram Web App to be ready
-    Telegram.WebApp.ready();
+        Telegram.WebApp.ready();
     </script>      
-         Telegram.WebApp.ready();
-    </script>     
     <script src="material/js/js.js"></script>
     <script src="material/js/main.js"></script>
 </body>
