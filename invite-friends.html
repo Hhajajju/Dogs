@@ -11,171 +11,188 @@
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
 
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    text-align: left;
-}
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            text-align: left;
+        }
 
-h1, h2, p {
-    margin: 20px 0;
-}
+        h1, h2, p {
+            margin: 20px 0;
+        }
 
-.medal-icon {
-    width: 80%;
-    margin: 20px 0;
-}
+        .medal-icon {
+            width: 80%;
+            margin: 20px 0;
+        }
 
-.progress-bar {
-    width: 80%;
-    background-color: #555;
-    height: 18px;
-    margin: 20px auto;
-    border-radius: 5px;
-}
+        .progress-bar {
+            width: 80%;
+            background-color: #555;
+            height: 18px;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
 
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000000;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #000000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
 
-.nav-item {
-    color: #fff;
-    text-decoration: none;
-    font-size: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .nav-item {
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.nav-item i {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
+        .nav-item i {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
 
-.nav-item span {
-    font-size: 10px;
-}
+        .nav-item span {
+            font-size: 10px;
+        }
 
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #000000;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
 
-.task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #000000;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
+        .task-icon {
+            width: 40px;
+            margin-right: 10px;
+        }
 
-.task-icon {
-    width: 40px;
-    margin-right: 10px;
-}
-.task p {
-    font-size: 11px;
-}
-.task button {
-    shape-margin: 0cap;
-    color: #000000;
-    background-color: rgb(255, 255, 255);
-}
+        .task p {
+            font-size: 11px;
+        }
 
-.hidden {
-    display: none;
-}
+        .task button {
+            shape-margin: 0cap;
+            color: #000000;
+            background-color: rgb(255, 255, 255);
+        }
 
-    /* Footer Background */
-footer.footer {
-    display: flex;
-    justify-content: space-between;  /* Ensure sections are spaced evenly */
-    background-color: black;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    z-index: 1000;
-    flex-wrap: wrap; /* Allow wrapping if the screen is very narrow */
-}
+        .hidden {
+            display: none;
+        }
 
-/* Style for each section */
-footer .section {
-    color: white;
-    text-align: center;
-    font-size: 14px;
-    flex: 1;  /* Ensures each section takes equal space */
-    padding: 5px;
-    min-width: 100px;  /* Ensures each section has a minimum width */
-}
+        /* Footer Background */
+        footer.footer {
+            display: flex;
+            justify-content: space-between;
+            background-color: black;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
 
-/* Style for icons */
-footer .section i {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
+        /* Style for each section */
+        footer .section {
+            color: white;
+            text-align: center;
+            font-size: 14px;
+            flex: 1;
+            padding: 5px;
+            min-width: 100px;
+        }
 
-/* Style for text below the icons */
-footer .section span {
-    display: block;
-    font-size: 12px;
-}
+        /* Style for icons */
+        footer .section i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
 
-/* Hover Effect */
-footer .section:hover {
-    color: #FFD700;  /* Gold color for hover effect */
-}
+        /* Style for text below the icons */
+        footer .section span {
+            display: block;
+            font-size: 12px;
+        }
 
-footer .section:hover i {
-    color: #FFD700;  /* Gold color for icons on hover */
-}
+        /* Hover Effect */
+        footer .section:hover {
+            color: #FFD700;
+        }
 
-/* Make sure the logo appears centered at the top */
-img {
-    display: block;
-    margin: 0 auto;
-    padding: 20px 0;
-}
+        footer .section:hover i {
+            color: #FFD700;
+        }
 
-/* Responsive Design: Adjust for smaller screens while keeping items horizontally aligned */
-@media (max-width: 768px) {
-    footer.footer {
-        justify-content: space-around;  /* Space items more evenly on smaller screens */
-    }
+        /* Make sure the logo appears centered at the top */
+        img {
+            display: block;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
 
-    footer .section {
-        font-size: 16px;
-        padding: 10px 5px;
-    }
+        /* Referral Section Styles */
+        .referral-info {
+            margin: 20px 0;
+            font-size: 18px;
+            color: #FFD700;
+        }
 
-    footer .section i {
-        font-size: 30px;  /* Larger icons on small screens */
-    }
+        .referral-logo {
+            width: 50px;
+            height: 50px;
+            margin: 10px 0;
+        }
 
-    footer .section span {
-        font-size: 14px;
-    }
-}
-</style>
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            footer.footer {
+                justify-content: space-around;
+            }
+
+            footer .section {
+                font-size: 16px;
+                padding: 10px 5px;
+            }
+
+            footer .section i {
+                font-size: 30px;
+            }
+
+            footer .section span {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <img src="freinds.png" alt="Referral Logo"> <!-- Add referral logo -->
+    <div class="referral-info">
+        <p>Earn 200 DOGS per Referral!</p>
+    </div>
 
     <div class="frens-invite">
         <div class="frens-invite-button">
@@ -183,7 +200,7 @@ img {
             <button id="copyButton">Copy Link</button>
         </div>
     </div>
-</section>
+
     <nav class="bottom-nav">
         <a href="home.html" class="nav-item">
             <i class="fas fa-home"></i>
@@ -205,11 +222,12 @@ img {
             <i class="fas fa-wallet"></i>
             <span>BALANCE</span>
         </a>
-    </nav>  
+    </nav>
+
     <script>
-    // Wait for the Telegram Web App to be ready
-    Telegram.WebApp.ready();
-</script>  
+        // Wait for the Telegram Web App to be ready
+        Telegram.WebApp.ready();
+    </script>
     <script src="material/js/cojs.js"></script>
     <script src="material/js/scripts.js"></script>
 </body>
