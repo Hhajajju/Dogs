@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="material/css/section.css">
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     
-    <script src="//niphaumeenses.net/vignette.min.js" data-zone="8694372" data-sdk="show_8694372"></script>
+    
+<script src="https://js.onclckvd.com/in-stream-ad-admanager/tma.js"></script>
+
     
     <style>
         body {
@@ -473,7 +475,17 @@ img {
     // Wait for the Telegram Web App to be ready
     Telegram.WebApp.ready();
     </script>
+                     
     
+<script>
+// Initialize the ad engine and retrieve the SHOW method for displaying ads
+  window.initCdTma?.({ id: 'Your Spot ID' }).then(show => window.show = show).catch(e => console.log(e))
+</script>
+// On button click, activate the retrieved SHOW method, which will return a Promise with the ad display success result
+<button onclick="window.show?.().then(() => console.log('tma ad played')).catch(e => console.log(e))">
+  Play Ads
+</button>
+
   <script src="material/js/js.js"></script>
   <script src="material/js/main.js"></script>               
 </body>
