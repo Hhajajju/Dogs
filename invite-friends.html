@@ -1,297 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invite Friends</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="material/css/styles.css">
-    <link rel="stylesheet" href="material/css/st.css">
-    <link rel="stylesheet" href="material/css/section.css">
-    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            text-align: center;
+<!-- Add this inside your <body> tag, replacing the referral-related JS and input block -->
+
+<input type="text" id="link" readonly>
+<button id="copyButton">Copy Link</button>
+
+<!-- Referral List -->
+<ul class="referral-list" id="referralList"></ul>
+
+<script>
+    Telegram.WebApp.ready();
+
+    const userId = Telegram.WebApp.initDataUnsafe?.user?.id || Math.floor(Math.random() * 1000000);
+    const userName = Telegram.WebApp.initDataUnsafe?.user?.username || "User_" + userId;
+
+    // Set referral link
+    const referralLink = `https://t.me/CLAIMDOGSS_BOT?start=${userId}`;
+    document.getElementById('link').value = referralLink;
+
+    // Handle copy button
+    document.getElementById('copyButton').onclick = function () {
+        navigator.clipboard.writeText(referralLink);
+        alert("Referral link copied!");
+    };
+
+    // Simulated referral tracking using localStorage
+    function loadUserData() {
+        const userKey = `user_${userId}`;
+        let userData = JSON.parse(localStorage.getItem(userKey));
+        if (!userData) {
+            userData = { referrals: [], dogs: 0 };
+            localStorage.setItem(userKey, JSON.stringify(userData));
         }
+        return userData;
+    }
 
-        .menu-icon {
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            text-align: left;
-        }
+    function saveUserData(data) {
+        const userKey = `user_${userId}`;
+        localStorage.setItem(userKey, JSON.stringify(data));
+    }
 
-        h1, h2, p {
-            margin: 20px 0;
-        }
-
-        .medal-icon {
-            width: 80%;
-            margin: 20px 0;
-        }
-
-        .progress-bar {
-            width: 80%;
-            background-color: #555;
-            height: 18px;
-            margin: 20px auto;
-            border-radius: 5px;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #000000;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-        }
-
-        .nav-item {
-            color: #fff;
-            text-decoration: none;
-            font-size: 10px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .nav-item i {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .nav-item span {
-            font-size: 10px;
-        }
-
-        .task {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            background-color: #000000;
-            margin-bottom: 10px;
-            border-radius: 10px;
-        }
-
-        .task-icon {
-            width: 40px;
-            margin-right: 10px;
-        }
-
-        .task p {
-            font-size: 11px;
-        }
-
-        .task button {
-            shape-margin: 0cap;
-            color: #000000;
-            background-color: rgb(255, 255, 255);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Footer Background */
-        footer.footer {
-            display: flex;
-            justify-content: space-between;
-            background-color: black;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            left: 0;
-            z-index: 1000;
-            flex-wrap: wrap;
-        }
-
-        /* Style for each section */
-        footer .section {
-            color: white;
-            text-align: center;
-            font-size: 14px;
-            flex: 1;
-            padding: 5px;
-            min-width: 100px;
-        }
-
-        /* Style for icons */
-        footer .section i {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        /* Style for text below the icons */
-        footer .section span {
-            display: block;
-            font-size: 12px;
-        }
-
-        /* Hover Effect */
-        footer .section:hover {
-            color: #FFD700;
-        }
-
-        footer .section:hover i {
-            color: #FFD700;
-        }
-
-        /* Make sure the logo appears centered at the top */
-        img {
-            display: block;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-        /* Referral Section Styles */
-        .referral-info {
-            margin: 20px 0;
-            font-size: 18px;
-            color: #FFD700;
-        }
-
-        .referral-logo {
-            width: 50px;
-            height: 50px;
-            margin: 10px 0;
-        }
-
-        /* Styling for the Copy Link Button and Link */
-        #link {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            width: 70%;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            text-align: center;
-            display: inline-block;
-        }
-
-        #copyButton {
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        #copyButton:hover {
-            background-color: #ddd;
-        }
-
-        /* Referral List Styling */
-        .referral-list {
-            margin-top: 30px;
-            color: #fff;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .referral-list li {
-            background-color: #333;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-        }
-
-        /* Logo under the Referral List */
-        .referral-logo-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            footer.footer {
-                justify-content: space-around;
-            }
-
-            footer .section {
-                font-size: 16px;
-                padding: 10px 5px;
-            }
-
-            footer .section i {
-                font-size: 30px;
-            }
-
-            footer .section span {
-                font-size: 14px;
+    function simulateReferralJoin() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const referrerId = urlParams.get('start');
+        if (referrerId && referrerId !== userId.toString()) {
+            const refKey = `user_${referrerId}`;
+            let refData = JSON.parse(localStorage.getItem(refKey)) || { referrals: [], dogs: 0 };
+            if (!refData.referrals.includes(userId)) {
+                refData.referrals.push(userId);
+                refData.dogs += 200;
+                localStorage.setItem(refKey, JSON.stringify(refData));
+                alert(`You were referred by ${referrerId}. They earned 200 DOGS!`);
             }
         }
-    </style>
-</head>
-<body>
-    <img src="material/images/freinds.png" width="60px" alt="">
-    <div class="referral-info">
-        <div id="balance-container">
-            <span id="balance">0</span> 🦴 total dogs
-        </div><br>
-        <h2><u><b>Referral</b></u></h2>
+    }
 
-        <p>Earn 200 DOGS per Referral!</p>
-    </div>
+    function updateUI() {
+        const data = loadUserData();
+        document.getElementById("balance").innerText = data.dogs;
+        const list = document.getElementById("referralList");
+        list.innerHTML = "";
+        data.referrals.forEach(r => {
+            const li = document.createElement("li");
+            li.textContent = `User ${r}`;
+            list.appendChild(li);
+        });
+    }
 
-    <input type="text" value="https://t.me/CLAIMDOGSS_BOT?start=1718299021932432" id="link" readonly>
-    <button id="copyButton">Copy Link</button>
-
-    <!-- Referral List -->
-    <ul class="referral-list">
-    
-
-    <!-- Referral Logo -->
-    <div class="referral-logo-container">
-        <img src="material/images/logo.png" width="100px" alt="">
-    </div>
-
-    <nav class="bottom-nav">
-        <a href="home.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>HOME</span>
-        </a>
-        <a href="leaderboard.html" class="nav-item">
-            <i class="fas fa-trophy"></i>
-            <span>LEADERBOARD</span>
-        </a>
-        <a href="invite-friends.html" class="nav-item">
-            <i class="fas fa-user-friends"></i>
-            <span>FRIENDS</span>
-        </a>
-        <a href="task.html" class="nav-item">
-            <i class="fas fa-tasks"></i>
-            <span>TASKS</span>
-        </a>
-        <a href="balance.html" class="nav-item">
-            <i class="fas fa-wallet"></i>
-            <span>BALANCE</span>
-        </a>
-    </nav>
-
-    <script>
-        // Wait for the Telegram Web App to be ready
-        Telegram.WebApp.ready();
-    </script>
-    <script src="material/js/js.js"></script>
-    <script src="material/js/main.js"></script>
-    <script src="material/js/cojs.js"></script>
-    <script src="material/js/scripts.js"></script>
-</body>
-</html>
+    simulateReferralJoin();
+    updateUI();
+</script>
