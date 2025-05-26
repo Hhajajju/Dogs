@@ -7,16 +7,42 @@ function updateBalance() {
 
 updateBalance();
 
+// Function to format time as minutes and seconds
+function formatTime(ms) {
+    const totalSeconds = Math.ceil(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes} minutes ${seconds} seconds`;
+}
+
 // Function to handle task completion and balance update
-function completeTask(reward, taskUrl) {
+function completeTask(reward, taskUrl, button) {
     const lastCompletionTime = parseInt(localStorage.getItem(taskUrl)) || 0;
     const currentTime = Date.now();
     const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime); // 24 hours in milliseconds
 
     if (timeRemaining > 0) {
-        showAlert(`You need to wait ${Math.ceil(timeRemaining / 1000)} seconds before completing this task again.`);
+        showAlert(`You need to wait ${formatTime(timeRemaining)} before completing this task again.`);
         return;
     }
+
+    // Disable the button and start countdown
+    button.disabled = true;
+    let remainingTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    
+    // Update button text every second
+    const countdownInterval = setInterval(() => {
+        remainingTime -= 1000;
+        
+        if (remainingTime > 0) {
+            const formattedTime = formatTime(remainingTime);
+            button.textContent = `Wait ${formattedTime}`;
+        } else {
+            clearInterval(countdownInterval);
+            button.disabled = false;
+            button.textContent = "Complete Task";
+        }
+    }, 1000);
 
     balance += reward;
     updateBalance();
@@ -29,24 +55,28 @@ function completeTask(reward, taskUrl) {
 
 // New ad functionality with countdown, notification, and storage for the ad timer
 function handleTaskCompletion(rewardAmount, button) {
-    // Retrieve the last ad completion time from localStorage
-    const lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
+    // Use button ID as the storage key for individual timers
+    const buttonId = button.id || 'adButton';
+    const lastAdTime = parseInt(localStorage.getItem(buttonId)) || 0;
     const currentTime = Date.now();
-    const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime); // 60 seconds cooldown for the ad
+    const remainingTime = Math.max(0, (lastAdTime + 60 * 60 * 1000) - currentTime); // 60 minutes cooldown for the ad
 
     if (remainingTime > 0) {
-        showAlert(`You need to wait ${Math.ceil(remainingTime / 1000)} seconds before watching the ad again.`);
+        showAlert(`You need to wait ${formatTime(remainingTime)} before watching the ad again.`);
         return;
     }
 
     // Disable the button and start the countdown
     button.disabled = true;
-    let countdownTime = 60; // 60 seconds cooldown
+    let countdownTime = 60 * 60 * 1000; // 60 minutes cooldown
 
     // Update button text every second
     const countdownInterval = setInterval(() => {
+        countdownTime -= 1000;
+        
         if (countdownTime > 0) {
-            button.textContent = `Wait ${countdownTime--}s`;
+            const formattedTime = formatTime(countdownTime);
+            button.textContent = `Wait ${formattedTime}`;
         } else {
             // Re-enable the button and reset the text after the countdown ends
             clearInterval(countdownInterval);
@@ -69,8 +99,8 @@ function handleTaskCompletion(rewardAmount, button) {
         // Update the UI to reflect the new balance
         document.getElementById('balance').textContent = currentBalance;
 
-        // Store the current time as the last ad completion time
-        localStorage.setItem('lastAdTime', currentTime);
+        // Store the current time as the last ad completion time for this specific button
+        localStorage.setItem(buttonId, currentTime);
 
         // Show the notification after watching the ad
         const notificationBox = document.createElement('div');
@@ -172,3 +202,60 @@ function showAlert(message) {
     notificationBox.appendChild(okButton);
     document.body.appendChild(notificationBox);
 }
+
+// Initialize button timers on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize task buttons
+    const taskButtons = document.querySelectorAll('[data-task]');
+    taskButtons.forEach(button => {
+        const taskUrl = button.getAttribute('data-task');
+        const lastCompletionTime = parseInt(localStorage.getItem(taskUrl)) || 0;
+        const currentTime = Date.now();
+        const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime);
+
+        if (timeRemaining > 0) {
+            button.disabled = true;
+            let remainingTime = timeRemaining;
+            
+            const countdownInterval = setInterval(() => {
+                remainingTime -= 1000;
+                
+                if (remainingTime > 0) {
+                    const formattedTime = formatTime(remainingTime);
+                    button.textContent = `Wait ${formattedTime}`;
+                } else {
+                    clearInterval(countdownInterval);
+                    button.disabled = false;
+                    button.textContent = "Complete Task";
+                }
+            }, 1000);
+        }
+    });
+
+    // Initialize ad buttons
+    const adButtons = document.querySelectorAll('[data-ad]');
+    adButtons.forEach(button => {
+        const buttonId = button.id || 'adButton';
+        const lastAdTime = parseInt(localStorage.getItem(buttonId)) || 0;
+        const currentTime = Date.now();
+        const remainingTime = Math.max(0, (lastAdTime + 60 * 60 * 1000) - currentTime);
+
+        if (remainingTime > 0) {
+            button.disabled = true;
+            let countdownTime = remainingTime;
+            
+            const countdownInterval = setInterval(() => {
+                countdownTime -= 1000;
+                
+                if (countdownTime > 0) {
+                    const formattedTime = formatTime(countdownTime);
+                    button.textContent = `Wait ${formattedTime}`;
+                } else {
+                    clearInterval(countdownInterval);
+                    button.disabled = false;
+                    button.textContent = "🦴 Claim";
+                }
+            }, 1000);
+        }
+    });
+});
