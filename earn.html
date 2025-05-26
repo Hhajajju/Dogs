@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -195,6 +194,26 @@ h1, h2, p {
             padding-right: 10px;
             border: 1px solid #000000; 
         }
+        
+        /* New styles for notice section */
+        .notice-container {
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .notice-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #ffcc00;
+        }
+        
+        .main-title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
         @media (max-width: 600px) {
             .task-container {
                 max-width: 100%;
@@ -207,97 +226,7 @@ h1, h2, p {
 
             .task h4 {
                 font-size: 16px;
-     body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    text-align: left;
-}
-
-h1, h2, p {
-    margin: 20px 0;
-}
-
-.medal-icon {
-    width: 80%;
-    margin: 20px 0;
-}
-
-.progress-bar {
-    width: 80%;
-    background-color: #555;
-    height: 18px;
-    margin: 20px auto;
-    border-radius: 5px;
-}
-
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000000;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-.nav-item {
-    color: #fff;
-    text-decoration: none;
-    font-size: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-item i {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.nav-item span {
-    font-size: 10px;
-}
-
-
-.task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #000000;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.task-icon {
-    width: 40px;
-    margin-right: 10px;
-}
-.task p {
-    font-size: 11px;
-}
-.task button {
-    shape-margin: 0cap;
-    color: #000000;
-    background-color: rgb(255, 255, 255);
-}
-
-.hidden {
-    display: none;
-}
-       }
+            }
         }
 
 
@@ -379,12 +308,14 @@ img {
    
 
     <div id="balance-container">
-  <h2><b> Read News for 30 seconds</b></h2>
-         <h2><b> Important Notice ⚠️</b></h2>
-        <h2><BR> You must scroll to down in the news page in 30 seconds for you to be rewarded,
-        otherwise,you may not be paid<BR></h2>
+        <h2 class="main-title">Read News for 30 seconds</h2>
+        <div class="notice-container">
+            <div class="notice-title">Important Notice ⚠️</div>
+            <div>You must scroll to down in the news page in 30 seconds for you to be rewarded, otherwise, you may not be paid</div>
+        </div>
+    </div>
+    
     <section class="tasks scrollable">
-
       <div class="task-container">
             <div class="task">
                 <div class="task-detail">
