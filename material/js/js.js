@@ -1,75 +1,62 @@
 let balance = parseInt(localStorage.getItem('balance')) || 0;
 
+// Update balance in the UI
 function updateBalance() {
     document.getElementById('balance').textContent = balance;
 }
-
 updateBalance();
 
-// Function to handle task completion and balance update with per-button timers
-function completeTask(button, reward, taskUrl) {
-    const lastCompletionTime = parseInt(localStorage.getItem(taskUrl)) || 0;
+// Format milliseconds into readable time
+function formatTime(ms) {
+    const seconds = Math.floor((ms / 1000) % 60);
+    const minutes = Math.floor((ms / (1000 * 60)) % 60);
+    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+    let result = '';
+    if (hours > 0) result += `${hours} hour${hours !== 1 ? 's' : ''} `;
+    if (minutes > 0) result += `${minutes} min${minutes !== 1 ? 's' : ''} `;
+    if (seconds >= 0) result += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
+    return result.trim();
+}
+
+// Task button handler with 24h cooldown
+function completeTask(reward, taskUrl, button) {
+    const taskKey = button.getAttribute('data-task');
+    const lastCompletionTime = parseInt(localStorage.getItem(taskKey)) || 0;
     const currentTime = Date.now();
-    const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime);
+    const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime); // 24 hours
+
+    const countdownDisplay = button.nextElementSibling;
 
     if (timeRemaining > 0) {
-        const seconds = Math.floor((timeRemaining / 1000) % 60);
-        const minutes = Math.floor((timeRemaining / (1000 * 60)) % 60);
-        const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+        let remaining = timeRemaining;
+        button.disabled = true;
 
-        let timeMessage = "You need to wait ";
-        if (hours > 0) timeMessage += `${hours} hour${hours !== 1 ? 's' : ''} `;
-        if (minutes > 0) timeMessage += `${minutes} min${minutes !== 1 ? 's' : ''} `;
-        if (seconds > 0) timeMessage += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
-        timeMessage = timeMessage.trim() + " before completing this task again.";
+        const updateCountdown = () => {
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                button.disabled = false;
+                countdownDisplay.textContent = '';
+                return;
+            }
+            countdownDisplay.textContent = `Remaining: ${formatTime(remaining)}`;
+            remaining -= 1000;
+        };
 
-        showAlert(timeMessage);
+        updateCountdown();
+        const timerInterval = setInterval(updateCountdown, 1000);
         return;
     }
 
     balance += reward;
     updateBalance();
-    localStorage.setItem(taskUrl, currentTime.toString());
+    localStorage.setItem(taskKey, currentTime.toString());
     localStorage.setItem('balance', balance);
     window.open(taskUrl, '_blank');
-
-    startTaskCountdown(button, 24 * 60 * 60); // Start a new 24-hour countdown
 }
 
-function startTaskCountdown(button, totalSeconds) {
-    let remaining = totalSeconds;
-
-    const updateButton = () => {
-        const hrs = Math.floor(remaining / 3600);
-        const mins = Math.floor((remaining % 3600) / 60);
-        const secs = remaining % 60;
-
-        let label = '';
-        if (hrs > 0) label += `${hrs} hour${hrs !== 1 ? 's' : ''} `;
-        if (mins > 0) label += `${mins} min${mins !== 1 ? 's' : ''} `;
-        if (secs > 0 || (!hrs && !mins)) label += `${secs} sec${secs !== 1 ? 's' : ''}`;
-
-        button.textContent = `Wait ${label.trim()}`;
-    };
-
-    updateButton();
-    button.disabled = true;
-
-    const interval = setInterval(() => {
-        remaining--;
-        if (remaining <= 0) {
-            clearInterval(interval);
-            button.textContent = "✅ Task Available";
-            button.disabled = false;
-        } else {
-            updateButton();
-        }
-    }, 1000);
-}
-
-// Ad functionality with independent per-button timers
+// Ad button handler with 60s cooldown
 function handleTaskCompletion(rewardAmount, button) {
-    const adKey = button.dataset.adKey || 'lastAdTime';
+    const adKey = button.getAttribute('data-task');
     const lastAdTime = parseInt(localStorage.getItem(adKey)) || 0;
     const currentTime = Date.now();
     const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime);
@@ -93,10 +80,9 @@ function handleTaskCompletion(rewardAmount, button) {
     }, 1000);
 
     show_8694372().then(() => {
-        let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
-        currentBalance += rewardAmount;
-        localStorage.setItem('balance', currentBalance);
-        document.getElementById('balance').textContent = currentBalance;
+        balance += rewardAmount;
+        updateBalance();
+        localStorage.setItem('balance', balance);
         localStorage.setItem(adKey, currentTime);
 
         const notificationBox = document.createElement('div');
@@ -131,11 +117,9 @@ function handleTaskCompletion(rewardAmount, button) {
         okButton.addEventListener('mouseover', () => {
             okButton.style.background = '#333';
         });
-
         okButton.addEventListener('mouseout', () => {
             okButton.style.background = '#555';
         });
-
         okButton.addEventListener('click', () => {
             document.body.removeChild(notificationBox);
         });
@@ -149,6 +133,7 @@ function handleTaskCompletion(rewardAmount, button) {
     });
 }
 
+// Alert pop-up box
 function showAlert(message) {
     const notificationBox = document.createElement('div');
     notificationBox.style.position = 'fixed';
@@ -182,11 +167,9 @@ function showAlert(message) {
     okButton.addEventListener('mouseover', () => {
         okButton.style.background = '#333';
     });
-
     okButton.addEventListener('mouseout', () => {
         okButton.style.background = '#555';
     });
-
     okButton.addEventListener('click', () => {
         document.body.removeChild(notificationBox);
     });
