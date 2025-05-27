@@ -1,12 +1,13 @@
 let balance = parseInt(localStorage.getItem('balance')) || 0;
 
-// Update balance in the UI
+// Function to update balance on the UI
 function updateBalance() {
     document.getElementById('balance').textContent = balance;
 }
+
 updateBalance();
 
-// Format milliseconds into readable time
+// Function to format time into "x hours y mins z sec"
 function formatTime(ms) {
     const seconds = Math.floor((ms / 1000) % 60);
     const minutes = Math.floor((ms / (1000 * 60)) % 60);
@@ -18,10 +19,9 @@ function formatTime(ms) {
     return result.trim();
 }
 
-// Task button handler with 24h cooldown
+// Function to handle task completion and balance update
 function completeTask(reward, taskUrl, button) {
-    const taskKey = button.getAttribute('data-task');
-    const lastCompletionTime = parseInt(localStorage.getItem(taskKey)) || 0;
+    const lastCompletionTime = parseInt(localStorage.getItem(taskUrl)) || 0;
     const currentTime = Date.now();
     const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime); // 24 hours
 
@@ -49,17 +49,16 @@ function completeTask(reward, taskUrl, button) {
 
     balance += reward;
     updateBalance();
-    localStorage.setItem(taskKey, currentTime.toString());
+    localStorage.setItem(taskUrl, currentTime.toString());
     localStorage.setItem('balance', balance);
     window.open(taskUrl, '_blank');
 }
 
-// Ad button handler with 60s cooldown
+// New ad functionality with countdown, notification, and storage for the ad timer
 function handleTaskCompletion(rewardAmount, button) {
-    const adKey = button.getAttribute('data-task');
-    const lastAdTime = parseInt(localStorage.getItem(adKey)) || 0;
+    const lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
     const currentTime = Date.now();
-    const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime);
+    const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime); // 60 seconds cooldown for the ad
 
     if (remainingTime > 0) {
         showAlert(`You need to wait ${Math.ceil(remainingTime / 1000)} seconds before watching the ad again.`);
@@ -80,10 +79,11 @@ function handleTaskCompletion(rewardAmount, button) {
     }, 1000);
 
     show_8694372().then(() => {
-        balance += rewardAmount;
-        updateBalance();
-        localStorage.setItem('balance', balance);
-        localStorage.setItem(adKey, currentTime);
+        let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
+        currentBalance += rewardAmount;
+        localStorage.setItem('balance', currentBalance);
+        document.getElementById('balance').textContent = currentBalance;
+        localStorage.setItem('lastAdTime', currentTime);
 
         const notificationBox = document.createElement('div');
         notificationBox.style.position = 'fixed';
@@ -117,9 +117,11 @@ function handleTaskCompletion(rewardAmount, button) {
         okButton.addEventListener('mouseover', () => {
             okButton.style.background = '#333';
         });
+
         okButton.addEventListener('mouseout', () => {
             okButton.style.background = '#555';
         });
+
         okButton.addEventListener('click', () => {
             document.body.removeChild(notificationBox);
         });
@@ -133,7 +135,7 @@ function handleTaskCompletion(rewardAmount, button) {
     });
 }
 
-// Alert pop-up box
+// Helper function to show a styled alert
 function showAlert(message) {
     const notificationBox = document.createElement('div');
     notificationBox.style.position = 'fixed';
@@ -167,9 +169,11 @@ function showAlert(message) {
     okButton.addEventListener('mouseover', () => {
         okButton.style.background = '#333';
     });
+
     okButton.addEventListener('mouseout', () => {
         okButton.style.background = '#555';
     });
+
     okButton.addEventListener('click', () => {
         document.body.removeChild(notificationBox);
     });
