@@ -1,49 +1,29 @@
 let balance = parseInt(localStorage.getItem('balance')) || 0;
 
-// Function to update balance on the UI
 function updateBalance() {
     document.getElementById('balance').textContent = balance;
 }
 
 updateBalance();
 
-// Function to format time into "x hours y mins z sec"
-function formatTime(ms) {
-    const seconds = Math.floor((ms / 1000) % 60);
-    const minutes = Math.floor((ms / (1000 * 60)) % 60);
-    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-    let result = '';
-    if (hours > 0) result += `${hours} hour${hours !== 1 ? 's' : ''} `;
-    if (minutes > 0) result += `${minutes} min${minutes !== 1 ? 's' : ''} `;
-    if (seconds >= 0) result += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
-    return result.trim();
-}
-
-// Function to handle task completion and balance update
-function completeTask(reward, taskUrl, button) {
+// Function to handle task completion and balance update with per-button timers
+function completeTask(button, reward, taskUrl) {
     const lastCompletionTime = parseInt(localStorage.getItem(taskUrl)) || 0;
     const currentTime = Date.now();
-    const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime); // 24 hours
-
-    const countdownDisplay = button.nextElementSibling;
+    const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime);
 
     if (timeRemaining > 0) {
-        let remaining = timeRemaining;
-        button.disabled = true;
+        const seconds = Math.floor((timeRemaining / 1000) % 60);
+        const minutes = Math.floor((timeRemaining / (1000 * 60)) % 60);
+        const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
 
-        const updateCountdown = () => {
-            if (remaining <= 0) {
-                clearInterval(timerInterval);
-                button.disabled = false;
-                countdownDisplay.textContent = '';
-                return;
-            }
-            countdownDisplay.textContent = `Remaining: ${formatTime(remaining)}`;
-            remaining -= 1000;
-        };
+        let timeMessage = "You need to wait ";
+        if (hours > 0) timeMessage += `${hours} hour${hours !== 1 ? 's' : ''} `;
+        if (minutes > 0) timeMessage += `${minutes} min${minutes !== 1 ? 's' : ''} `;
+        if (seconds > 0) timeMessage += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
+        timeMessage = timeMessage.trim() + " before completing this task again.";
 
-        updateCountdown();
-        const timerInterval = setInterval(updateCountdown, 1000);
+        showAlert(timeMessage);
         return;
     }
 
@@ -52,13 +32,47 @@ function completeTask(reward, taskUrl, button) {
     localStorage.setItem(taskUrl, currentTime.toString());
     localStorage.setItem('balance', balance);
     window.open(taskUrl, '_blank');
+
+    startTaskCountdown(button, 24 * 60 * 60); // Start a new 24-hour countdown
 }
 
-// New ad functionality with countdown, notification, and storage for the ad timer
+function startTaskCountdown(button, totalSeconds) {
+    let remaining = totalSeconds;
+
+    const updateButton = () => {
+        const hrs = Math.floor(remaining / 3600);
+        const mins = Math.floor((remaining % 3600) / 60);
+        const secs = remaining % 60;
+
+        let label = '';
+        if (hrs > 0) label += `${hrs} hour${hrs !== 1 ? 's' : ''} `;
+        if (mins > 0) label += `${mins} min${mins !== 1 ? 's' : ''} `;
+        if (secs > 0 || (!hrs && !mins)) label += `${secs} sec${secs !== 1 ? 's' : ''}`;
+
+        button.textContent = `Wait ${label.trim()}`;
+    };
+
+    updateButton();
+    button.disabled = true;
+
+    const interval = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+            clearInterval(interval);
+            button.textContent = "✅ Task Available";
+            button.disabled = false;
+        } else {
+            updateButton();
+        }
+    }, 1000);
+}
+
+// Ad functionality with independent per-button timers
 function handleTaskCompletion(rewardAmount, button) {
-    const lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
+    const adKey = button.dataset.adKey || 'lastAdTime';
+    const lastAdTime = parseInt(localStorage.getItem(adKey)) || 0;
     const currentTime = Date.now();
-    const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime); // 60 seconds cooldown for the ad
+    const remainingTime = Math.max(0, (lastAdTime + 60 * 1000) - currentTime);
 
     if (remainingTime > 0) {
         showAlert(`You need to wait ${Math.ceil(remainingTime / 1000)} seconds before watching the ad again.`);
@@ -83,7 +97,7 @@ function handleTaskCompletion(rewardAmount, button) {
         currentBalance += rewardAmount;
         localStorage.setItem('balance', currentBalance);
         document.getElementById('balance').textContent = currentBalance;
-        localStorage.setItem('lastAdTime', currentTime);
+        localStorage.setItem(adKey, currentTime);
 
         const notificationBox = document.createElement('div');
         notificationBox.style.position = 'fixed';
@@ -135,7 +149,6 @@ function handleTaskCompletion(rewardAmount, button) {
     });
 }
 
-// Helper function to show a styled alert
 function showAlert(message) {
     const notificationBox = document.createElement('div');
     notificationBox.style.position = 'fixed';
