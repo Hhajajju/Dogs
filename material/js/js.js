@@ -7,33 +7,50 @@ function updateBalance() {
 
 updateBalance();
 
+// Function to format time into "x hours y mins z sec"
+function formatTime(ms) {
+    const seconds = Math.floor((ms / 1000) % 60);
+    const minutes = Math.floor((ms / (1000 * 60)) % 60);
+    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+    let result = '';
+    if (hours > 0) result += `${hours} hour${hours !== 1 ? 's' : ''} `;
+    if (minutes > 0) result += `${minutes} min${minutes !== 1 ? 's' : ''} `;
+    if (seconds >= 0) result += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
+    return result.trim();
+}
+
 // Function to handle task completion and balance update
-function completeTask(reward, taskUrl) {
+function completeTask(reward, taskUrl, button) {
     const lastCompletionTime = parseInt(localStorage.getItem(taskUrl)) || 0;
     const currentTime = Date.now();
-    const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime); // 24 hours in milliseconds
+    const timeRemaining = 24 * 60 * 60 * 1000 - (currentTime - lastCompletionTime); // 24 hours
+
+    const countdownDisplay = button.nextElementSibling;
 
     if (timeRemaining > 0) {
-        const seconds = Math.floor((timeRemaining / 1000) % 60);
-        const minutes = Math.floor((timeRemaining / (1000 * 60)) % 60);
-        const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+        let remaining = timeRemaining;
+        button.disabled = true;
 
-        let timeMessage = "You need to wait ";
-        if (hours > 0) timeMessage += `${hours} hour${hours !== 1 ? 's' : ''} `;
-        if (minutes > 0) timeMessage += `${minutes} min${minutes !== 1 ? 's' : ''} `;
-        if (seconds > 0) timeMessage += `${seconds} sec${seconds !== 1 ? 's' : ''}`;
-        timeMessage = timeMessage.trim() + " before completing this task again.";
+        const updateCountdown = () => {
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                button.disabled = false;
+                countdownDisplay.textContent = '';
+                return;
+            }
+            countdownDisplay.textContent = `Remaining: ${formatTime(remaining)}`;
+            remaining -= 1000;
+        };
 
-        showAlert(timeMessage);
+        updateCountdown();
+        const timerInterval = setInterval(updateCountdown, 1000);
         return;
     }
 
     balance += reward;
     updateBalance();
-
-    localStorage.setItem(taskUrl, currentTime.toString()); // Store the current time as the last completion time
+    localStorage.setItem(taskUrl, currentTime.toString());
     localStorage.setItem('balance', balance);
-
     window.open(taskUrl, '_blank');
 }
 
