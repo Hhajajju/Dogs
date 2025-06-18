@@ -204,7 +204,63 @@
     </nav>
 
     <script>
+        // Initialize Telegram Web App
         Telegram.WebApp.ready();
+        
+        // Load balance from localStorage when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedBalance = parseFloat(localStorage.getItem('tonBalance')) || 0;
+            document.getElementById('balance').textContent = savedBalance.toFixed(3);
+            
+            // Check if wallet is already connected
+            const walletConnected = localStorage.getItem('walletConnected') === 'true';
+            if (walletConnected) {
+                const connectButton = document.querySelector('.task-button');
+                if (connectButton) {
+                    connectButton.textContent = 'CONNECTED';
+                    connectButton.style.backgroundColor = '#4CAF50'; // Green color for connected state
+                    connectButton.style.color = 'white';
+                }
+            }
+        });
+
+        // Function to handle wallet connection (would be called from wat.html)
+        function connectWallet() {
+            localStorage.setItem('walletConnected', 'true');
+            const connectButton = document.querySelector('.task-button');
+            if (connectButton) {
+                connectButton.textContent = 'CONNECTED';
+                connectButton.style.backgroundColor = '#4CAF50';
+                connectButton.style.color = 'white';
+                
+                // Show success notification
+                const notification = document.createElement('div');
+                notification.style.position = 'fixed';
+                notification.style.top = '50%';
+                notification.style.left = '50%';
+                notification.style.transform = 'translate(-50%, -50%)';
+                notification.style.background = '#fff';
+                notification.style.color = '#000';
+                notification.style.border = '1px solid #ccc';
+                notification.style.borderRadius = '10px';
+                notification.style.padding = '20px';
+                notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                notification.style.textAlign = 'center';
+                notification.style.zIndex = '1000';
+                
+                notification.innerHTML = `
+                    <p style="margin: 0 0 15px; font-size: 16px;">Wallet connected successfully!</p>
+                    <button style="padding: 10px 20px; border: none; background: #333; color: #fff; 
+                           border-radius: 5px; cursor: pointer;">OK</button>
+                `;
+                
+                notification.querySelector('button').addEventListener('click', () => {
+                    document.body.removeChild(notification);
+                });
+                
+                document.body.appendChild(notification);
+            }
+        }
     </script>      
     <script src="material/js/js.js"></script>
     <script src="material/js/main.js"></script>
