@@ -1,83 +1,167 @@
-       function handleTaskCompletion(rewardAmount, button) {
-        // Disable the button and start the countdown
-        button.disabled = true;
-        let countdownTime = 60; // 60 seconds
+// ===== TASK COMPLETION SYSTEM ===== //
+// Global cooldown tracker
+const taskCooldowns = new Map();
 
-        // Update button text every second
-        const countdownInterval = setInterval(() => {
-            if (countdownTime > 0) {
-                button.textContent = `Wait ${countdownTime--}s`;
-            } else {
-                // Re-enable the button and reset the text after the countdown ends
-                clearInterval(countdownInterval);
-                button.disabled = false;
-                button.textContent = "🦴 Claim";
+// Initialize task buttons on page load
+function initializeTasks() {
+    document.querySelectorAll('.task-button').forEach(button => {
+        const taskId = button.id || 'default-task';
+        const lastCompletion = localStorage.getItem(`taskCooldown_${taskId}`);
+        const now = Date.now();
+        
+        if (lastCompletion) {
+            const cooldownRemaining = 60000 - (now - parseInt(lastCompletion));
+            if (cooldownRemaining > 0) {
+                startCooldown(button, Math.floor(cooldownRemaining / 1000));
             }
-        }, 1000);
+        }
+        
+        button.addEventListener('click', () => handleTaskClick(button, 10)); // Default 10 coin reward
+    });
+}
 
-        // Trigger the ad display
-        show_8694372().then(() => {
-            // Create a cleaner notification with the site's color scheme
-            const notificationBox = document.createElement('div');
-            notificationBox.style.position = 'fixed';
-            notificationBox.style.top = '50%';
-            notificationBox.style.left = '50%';
-            notificationBox.style.transform = 'translate(-50%, -50%)';
-            notificationBox.style.background = '#fff'; // white background
-            notificationBox.style.color = '#000'; // black text
-            notificationBox.style.border = '1px solid #ccc'; // Light gray border
-            notificationBox.style.borderRadius = '10px';
-            notificationBox.style.padding = '20px';
-            notificationBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-            notificationBox.style.textAlign = 'center';
-            notificationBox.style.zIndex = '1000';
+// Handle task button click
+function handleTaskClick(button, rewardAmount) {
+    const taskId = button.id || 'default-task';
+    
+    // Prevent multiple clicks
+    if (button.classList.contains('cooldown-active')) return;
+    
+    // Start cooldown immediately (optimistic UI update)
+    startCooldown(button, 60);
+    localStorage.setItem(`taskCooldown_${taskId}`, Date.now().toString());
+    
+    // Show ad and process reward
+    showAd().then(() => {
+        processReward(rewardAmount);
+        showSuccessNotification(rewardAmount);
+    }).catch(error => {
+        console.error("Ad error:", error);
+        resetCooldown(button); // Reset if ad fails
+        showErrorNotification();
+    });
+}
 
-            const message = document.createElement('p');
-            message.textContent = 'You have watched the ad!';
-            message.style.margin = '0 0 15px';
-            message.style.fontSize = '16px';
+// Cooldown management
+function startCooldown(button, seconds) {
+    button.classList.add('cooldown-active');
+    button.disabled = true;
+    
+    let remaining = seconds;
+    updateButtonText(button, remaining);
+    
+    const interval = setInterval(() => {
+        remaining--;
+        updateButtonText(button, remaining);
+        
+        if (remaining <= 0) {
+            clearInterval(interval);
+            resetCooldown(button);
+        }
+    }, 1000);
+    
+    // Store interval reference for cleanup
+    taskCooldowns.set(button, interval);
+}
 
-            const okButton = document.createElement('button');
-            okButton.textContent = 'OK';
-            okButton.style.padding = '10px 20px';
-            okButton.style.border = 'none';
-            okButton.style.background = '#333'; // Medium gray button
-            okButton.style.color = '#fff'; // black text
-            okButton.style.borderRadius = '5px';
-            okButton.style.cursor = 'pointer';
-            okButton.style.transition = 'background 0.3s';
+function resetCooldown(button) {
+    button.classList.remove('cooldown-active');
+    button.disabled = false;
+    button.textContent = "🦴 Claim";
+    
+    const interval = taskCooldowns.get(button);
+    if (interval) clearInterval(interval);
+    taskCooldowns.delete(button);
+}
 
-            // Add hover effect to the button
-            okButton.addEventListener('mouseover', () => {
-                okButton.style.background = '#333'; // Lighter gray on hover
-            });
+function updateButtonText(button, seconds) {
+    button.textContent = seconds > 0 ? `Wait ${seconds}s` : "🦴 Claim";
+}
 
-            okButton.addEventListener('mouseout', () => {
-                okButton.style.background = '#555'; // Return to original color
-            });
+// Reward processing
+function processReward(amount) {
+    const balance = parseInt(localStorage.getItem('balance')) || 0;
+    const newBalance = balance + amount;
+    localStorage.setItem('balance', newBalance.toString());
+    updateBalanceDisplay(newBalance);
+}
 
-            okButton.addEventListener('click', () => {
-                document.body.removeChild(notificationBox);
-            });
+function updateBalanceDisplay(balance) {
+    const balanceElement = document.getElementById('balance');
+    if (balanceElement) {
+        balanceElement.textContent = balance.toLocaleString();
+    }
+}
 
-            notificationBox.appendChild(message);
-            notificationBox.appendChild(okButton);
-            document.body.appendChild(notificationBox);
+// Notification system (using your existing CSS classes)
+function showSuccessNotification(rewardAmount) {
+    const notification = createNotification(
+        `+${rewardAmount} coins earned!`,
+        'notification-success'
+    );
+    showNotification(notification);
+}
 
-            // Retrieve current coin balance from localStorage
-            let currentBalance = parseInt(localStorage.getItem('coinBalance')) || 0;
+function showErrorNotification() {
+    const notification = createNotification(
+        'Ad failed to load. Please try again.',
+        'notification-error'
+    );
+    showNotification(notification);
+}
 
-            // Update the coin balance
-            currentBalance += rewardAmount;
+function createNotification(message, className) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${className}`;
+    
+    notification.innerHTML = `
+        <div class="notification-content">
+            <p>${message}</p>
+            <button class="notification-close">OK</button>
+        </div>
+    `;
+    
+    return notification;
+}
 
-            // Store the updated balance back in localStorage
-            localStorage.setItem('coinBalance', currentBalance);
+function showNotification(notification) {
+    document.body.appendChild(notification);
+    
+    notification.querySelector('.notification-close').addEventListener('click', () => {
+        notification.classList.add('fade-out');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    });
+    
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            notification.classList.add('fade-out');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }
+    }, 5000);
+}
 
-            // Update the UI to reflect the new balance
-            document.getElementById('balance').textContent = currentBalance;
-        }).catch((error) => {
-            // Handle any errors that occur during ad display
-            console.error('Error displaying ad:', error);
-            alert('An error occurred while displaying the ad.');
-        });
-           }                                 
+// Ad service integration (mock implementation)
+function showAd() {
+    return new Promise((resolve, reject) => {
+        // Replace with your actual ad service integration
+        const success = Math.random() > 0.1; // 90% success rate for testing
+        
+        setTimeout(() => {
+            success ? resolve() : reject(new Error('Ad failed'));
+        }, 2000);
+    });
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTasks();
+    
+    // Initialize balance display
+    const balance = parseInt(localStorage.getItem('balance')) || 0;
+    updateBalanceDisplay(balance);
+});
