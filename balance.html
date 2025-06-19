@@ -209,6 +209,11 @@
         
         // Load balance from localStorage when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize balance to 0 if not exists
+            if (localStorage.getItem('tonBalance') === null) {
+                localStorage.setItem('tonBalance', '0');
+            }
+            
             const savedBalance = parseFloat(localStorage.getItem('tonBalance')) || 0;
             document.getElementById('balance').textContent = savedBalance.toFixed(3);
             
@@ -260,6 +265,14 @@
                 
                 document.body.appendChild(notification);
             }
+        }
+        
+        // Function to update balance (can be called from other pages)
+        function updateBalance(amount) {
+            const currentBalance = parseFloat(localStorage.getItem('tonBalance')) || 0;
+            const newBalance = currentBalance + amount;
+            localStorage.setItem('tonBalance', newBalance.toFixed(3));
+            document.getElementById('balance').textContent = newBalance.toFixed(3);
         }
     </script>      
     <script src="material/js/js.js"></script>
