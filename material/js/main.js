@@ -1,85 +1,123 @@
+// DOM Elements
 const body = document.body;
 const image = body.querySelector('#coin');
 const h1 = body.querySelector('h1');
+const progressBar = body.querySelector('.progress');
 
-let coins = localStorage.getItem('coins');
-let total = localStorage.getItem('total');
-let power = localStorage.getItem('power');
-let count = localStorage.getItem('count')
+// Game State
+const gameState = {
+    coins: 0,
+    total: 500,
+    power: 500,
+    count: 1,
+    lastAdTime: 0
+};
 
-if(coins == null){
-    localStorage.setItem('coins' , '0');
-    h1.textContent = '0';
-}else{
-    h1.textContent = Number(coins).toLocaleString();
-}
+// Initialize Game
+function initGame() {
+    // Load from localStorage or use defaults
+    gameState.coins = parseInt(localStorage.getItem('coins')) || 0;
+    gameState.total = parseInt(localStorage.getItem('total')) || 500;
+    gameState.power = parseInt(localStorage.getItem('power')) || 500;
+    gameState.count = parseInt(localStorage.getItem('count')) || 1;
+    gameState.lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
 
-if(total == null){
-    localStorage.setItem('total' , '500')
-    body.querySelector('#total').textContent = '/500';
-}else {
-    body.querySelector('#total').textContent = `/${total}`;
-}
-
-
-if(power == null){
-    localStorage.setItem('power' , '500');
-    body.querySelector('#power').textContent = '500';
-}else{
-    body.querySelector('#power').textContent = power;
-}
-
-
-if(count == null){
-    localStorage.setItem('count' , '1')
-}
-
-image.addEventListener('click' , (e)=> {
-
-    let x = e.offsetX;
-    let y = e.offsetY;
-
-
-    navigator.vibrate(5);
-
-    coins = localStorage.getItem('coins');
-    power = localStorage.getItem('power');
+    // Update UI
+    updateUI();
     
-    if(Number(power) > 0){
-        localStorage.setItem('coins' , `${Number(coins) + 1}`);
-        h1.textContent = `${(Number(coins) + 1).toLocaleString()}`;
-    
-        localStorage.setItem('power' , `${Number(power) - 1}`);
-        body.querySelector('#power').textContent = `${Number(power) - 1}`;
-    } 
+    // Start power recharge loop
+    setInterval(rechargePower, 1000);
+}
 
-    if(x < 150 & y < 150){
+// Update all UI elements
+function updateUI() {
+    h1.textContent = gameState.coins.toLocaleString();
+    body.querySelector('#power').textContent = gameState.power;
+    body.querySelector('#total').textContent = `/${gameState.total}`;
+    progressBar.style.width = `${(gameState.power / gameState.total) * 100}%`;
+}
+
+// Save game state to localStorage
+function saveGame() {
+    localStorage.setItem('coins', gameState.coins.toString());
+    localStorage.setItem('power', gameState.power.toString());
+    localStorage.setItem('total', gameState.total.toString());
+    localStorage.setItem('count', gameState.count.toString());
+    localStorage.setItem('lastAdTime', gameState.lastAdTime.toString());
+}
+
+// Handle coin click
+function handleCoinClick(e) {
+    if (gameState.power <= 0) return;
+
+    // Visual feedback
+    applyClickEffect(e.offsetX, e.offsetY);
+    
+    // Update game state
+    gameState.coins += 1;
+    gameState.power -= 1;
+    
+    // Save and update
+    saveGame();
+    updateUI();
+}
+
+// Apply visual click effect
+function applyClickEffect(x, y) {
+    if (navigator.vibrate) navigator.vibrate(5);
+
+    if (x < 150 && y < 150) {
         image.style.transform = 'translate(-0.25rem, -0.25rem) skewY(-10deg) skewX(5deg)';
-    }
-    else if (x < 150 & y > 150){
+    } else if (x < 150 && y > 150) {
         image.style.transform = 'translate(-0.25rem, 0.25rem) skewY(-10deg) skewX(5deg)';
-    }
-    else if (x > 150 & y > 150){
+    } else if (x > 150 && y > 150) {
         image.style.transform = 'translate(0.25rem, 0.25rem) skewY(10deg) skewX(-5deg)';
-    }
-    else if (x > 150 & y < 150){
+    } else if (x > 150 && y < 150) {
         image.style.transform = 'translate(0.25rem, -0.25rem) skewY(10deg) skewX(-5deg)';
     }
 
-
-    setTimeout(()=>{
+    setTimeout(() => {
         image.style.transform = 'translate(0px, 0px)';
     }, 100);
+}
 
-    body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
-});
-
-setInterval(()=> {
-    count = localStorage.getItem('count')
-    power = localStorage.getItem('power');
-    if(Number(total) > power){
-        localStorage.setItem('power' , `${Number(power) + Number(count)}`);
-        body.querySelector('#power').textContent = `${Number(power) + Number(count)}`;
-        body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
+// Recharge power over time
+function rechargePower() {
+    if (gameState.power < gameState.total) {
+        gameState.power += gameState.count;
+        if (gameState.power > gameState.total) {
+            gameState.power = gameState.total;
+        }
+        saveGame();
+        updateUI();
     }
-}, 1000);
+}
+
+// Handle ad reward (fixed version)
+function handleAdReward(rewardAmount = 10) {
+    const currentTime = Date.now();
+    const cooldown = 60 * 1000; // 60 seconds cooldown
+    
+    // Check cooldown
+    if (currentTime - gameState.lastAdTime < cooldown) {
+        const remaining = Math.ceil((cooldown - (currentTime - gameState.lastAdTime)) / 1000);
+        alert(`Please wait ${remaining} seconds before watching another ad.`);
+        return false;
+    }
+    
+    // Apply reward
+    gameState.coins += rewardAmount;
+    gameState.lastAdTime = currentTime;
+    
+    // Save and update
+    saveGame();
+    updateUI();
+    
+    return true;
+}
+
+// Initialize game when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initGame();
+    image.addEventListener('click', handleCoinClick);
+});
