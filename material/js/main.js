@@ -4,23 +4,25 @@ const image = body.querySelector('#coin');
 const h1 = body.querySelector('h1');
 const progressBar = body.querySelector('.progress');
 
-// Game State
+// Game State - Initialize all values to 0
 const gameState = {
-    coins: 0,
-    total: 500,
-    power: 500,
-    count: 1,
-    lastAdTime: 0
+    coins: 0,        // Start at 0 coins
+    total: 500,      // Max power capacity
+    power: 0,        // Start at 0 power
+    count: 1,        // Power recharge rate
+    lastAdTime: 0    // Last ad watch time
 };
 
 // Initialize Game
 function initGame() {
-    // Load from localStorage or use defaults
+    // Load from localStorage - default to 0 if not exists
     gameState.coins = parseInt(localStorage.getItem('coins')) || 0;
-    gameState.total = parseInt(localStorage.getItem('total')) || 500;
-    gameState.power = parseInt(localStorage.getItem('power')) || 500;
+    gameState.power = parseInt(localStorage.getItem('power')) || 0;
     gameState.count = parseInt(localStorage.getItem('count')) || 1;
     gameState.lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
+    
+    // Keep total fixed at 500 (no need to load from storage)
+    gameState.total = 500;
 
     // Update UI
     updateUI();
@@ -41,7 +43,6 @@ function updateUI() {
 function saveGame() {
     localStorage.setItem('coins', gameState.coins.toString());
     localStorage.setItem('power', gameState.power.toString());
-    localStorage.setItem('total', gameState.total.toString());
     localStorage.setItem('count', gameState.count.toString());
     localStorage.setItem('lastAdTime', gameState.lastAdTime.toString());
 }
@@ -93,7 +94,7 @@ function rechargePower() {
     }
 }
 
-// Handle ad reward (fixed version)
+// Handle ad reward
 function handleAdReward(rewardAmount = 10) {
     const currentTime = Date.now();
     const cooldown = 60 * 1000; // 60 seconds cooldown
