@@ -8,7 +8,15 @@
     <link rel="stylesheet" href="material/css/styles.css">
     <link rel="stylesheet" href="material/css/section.css">
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
-    <script src="//niphaumeenses.net/vignette.min.js" data-zone="8694372" data-sdk="show_8694372"></script>
+
+          <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
+          <script>
+            window.TelegramAdsController = new TelegramAdsController();
+            window.TelegramAdsController.initialize({
+              pubId: "953456",
+              appId: "2474",
+            });
+          </script>
     
     <style>
         body {
@@ -538,7 +546,7 @@
         }, 1000);
 
         // Show ad
-        show_8694372().then(() => {
+        show_953456().then(() => {
             // Get current balance (starts at 0 if not exists)
             const currentBalance = parseFloat(localStorage.getItem('tonBalance')) || 0;
             const newBalance = currentBalance + rewardAmount;
