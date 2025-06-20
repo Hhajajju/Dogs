@@ -84,7 +84,7 @@
             padding: 12px 40px;
             font-size: 16px;
             cursor: pointer;
-            border-radius: 50px; /* This creates the oval shape */
+            border-radius: 50px;
             transition: background-color 0.3s ease;
         }
 
@@ -137,17 +137,16 @@
         .nav-item span {
             font-size: 10px;
         }
-
     </style> 
 </head>
 <body>
-    <br>
-
-    <div id="balance-container"><h2><b>💸</b></h2><br>
+    <div id="balance-container">
+        <h2><b>💸</b></h2><br>
         <span id="balance">0</span> Total Ton
         <br><br>
-    </div><h2><b>Minimum withdraw!!</b></h2>
-    </div><h2><b>1 Ton</b></h2>
+    </div>
+    <h2><b>Minimum withdraw!!</b></h2>
+    <h2><b>1 Ton</b></h2>
     <br>
        
     <a href="detail.html" class="nav-item"> 
@@ -163,17 +162,17 @@
                     <img src="material/images/ton.png" width="45px" alt="">
                 </div>
                 <div>
-                    <h4>Link your wallet </h4>
+                    <h4>Link your wallet</h4>
                     <div class="task-data">
                         <img src="material/images/ton.png" width="20px" alt="Coin Icon">
                         <h5>💳</h5>
                     </div>
                 </div>
             </div>
-            <button onclick="window.location.href='wat.html'" class="task-button">CONNECT</button>
+            <button id="walletConnectButton" class="task-button">CONNECT</button>
         </div>
     </div>
-    <br> <br>
+    <br><br>
     <img src="material/images/20250525_131501.png" width="50%">
 
     <nav class="bottom-nav">
@@ -207,64 +206,55 @@
         // Initialize Telegram Web App
         Telegram.WebApp.ready();
         
-        // Load balance from localStorage when page loads
+        // Load balance and connection state when page loads
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize balance to 0 if not exists
             if (localStorage.getItem('tonBalance') === null) {
                 localStorage.setItem('tonBalance', '0');
             }
             
+            // Load and display balance
             const savedBalance = parseFloat(localStorage.getItem('tonBalance')) || 0;
             document.getElementById('balance').textContent = savedBalance.toFixed(3);
             
-            // Check if wallet is already connected
-            const walletConnected = localStorage.getItem('walletConnected') === 'true';
-            if (walletConnected) {
-                const connectButton = document.querySelector('.task-button');
-                if (connectButton) {
-                    connectButton.textContent = 'CONNECTED';
-                    connectButton.style.backgroundColor = '#4CAF50'; // Green color for connected state
-                    connectButton.style.color = 'white';
-                }
+            // Initialize wallet connection state
+            updateWalletButtonState();
+            
+            // Set up wallet connection button
+            const connectButton = document.getElementById('walletConnectButton');
+            if (connectButton) {
+                connectButton.addEventListener('click', function() {
+                    if (localStorage.getItem('walletConnected') !== 'true') {
+                        window.location.href = 'wat.html';
+                    }
+                });
             }
         });
 
-        // Function to handle wallet connection (would be called from wat.html)
+        // Update wallet button based on connection state
+        function updateWalletButtonState() {
+            const isConnected = localStorage.getItem('walletConnected') === 'true';
+            const connectButton = document.getElementById('walletConnectButton');
+            
+            if (connectButton) {
+                if (isConnected) {
+                    connectButton.textContent = 'CONNECTED';
+                    connectButton.style.backgroundColor = '#4CAF50';
+                    connectButton.style.color = 'white';
+                } else {
+                    connectButton.textContent = 'CONNECT';
+                    connectButton.style.backgroundColor = '#ffffff';
+                    connectButton.style.color = 'black';
+                }
+            }
+        }
+
+        // Function to handle wallet connection (called from wat.html)
         function connectWallet() {
             localStorage.setItem('walletConnected', 'true');
-            const connectButton = document.querySelector('.task-button');
-            if (connectButton) {
-                connectButton.textContent = 'CONNECTED';
-                connectButton.style.backgroundColor = '#4CAF50';
-                connectButton.style.color = 'white';
-                
-                // Show success notification
-                const notification = document.createElement('div');
-                notification.style.position = 'fixed';
-                notification.style.top = '50%';
-                notification.style.left = '50%';
-                notification.style.transform = 'translate(-50%, -50%)';
-                notification.style.background = '#fff';
-                notification.style.color = '#000';
-                notification.style.border = '1px solid #ccc';
-                notification.style.borderRadius = '10px';
-                notification.style.padding = '20px';
-                notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-                notification.style.textAlign = 'center';
-                notification.style.zIndex = '1000';
-                
-                notification.innerHTML = `
-                    <p style="margin: 0 0 15px; font-size: 16px;">Wallet connected successfully!</p>
-                    <button style="padding: 10px 20px; border: none; background: #333; color: #fff; 
-                           border-radius: 5px; cursor: pointer;">OK</button>
-                `;
-                
-                notification.querySelector('button').addEventListener('click', () => {
-                    document.body.removeChild(notification);
-                });
-                
-                document.body.appendChild(notification);
-            }
+            updateWalletButtonState();
+            showNotification('Wallet connected successfully!');
+            updateBalance(0); // Refresh balance display
         }
         
         // Function to update balance (can be called from other pages)
@@ -274,8 +264,35 @@
             localStorage.setItem('tonBalance', newBalance.toFixed(3));
             document.getElementById('balance').textContent = newBalance.toFixed(3);
         }
-    </script>      
-    <script src="material/js/js.js"></script>
-    <script src="material/js/main.js"></script>
+        
+        // Show notification popup
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '50%';
+            notification.style.left = '50%';
+            notification.style.transform = 'translate(-50%, -50%)';
+            notification.style.background = '#fff';
+            notification.style.color = '#000';
+            notification.style.border = '1px solid #ccc';
+            notification.style.borderRadius = '10px';
+            notification.style.padding = '20px';
+            notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            notification.style.textAlign = 'center';
+            notification.style.zIndex = '1000';
+            
+            notification.innerHTML = `
+                <p style="margin: 0 0 15px; font-size: 16px;">${message}</p>
+                <button style="padding: 10px 20px; border: none; background: #333; color: #fff; 
+                       border-radius: 5px; cursor: pointer;">OK</button>
+            `;
+            
+            notification.querySelector('button').addEventListener('click', () => {
+                document.body.removeChild(notification);
+            });
+            
+            document.body.appendChild(notification);
+        }
+    </script>
 </body>
 </html>
