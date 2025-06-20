@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -567,7 +566,7 @@
             notification.style.zIndex = '1000';
             
             notification.innerHTML = `
-                <p style="margin: 0 0 15px; font-size: 16px;">You earned ${rewardAmount} TON!</p>
+                <p style="margin: 0 0 15px; font-size: 16px;">You earned ${rewardAmount.toFixed(3)} TON!</p>
                 <button style="padding: 10px 20px; border: none; background: #333; color: #fff; 
                        border-radius: 5px; cursor: pointer;">OK</button>
             `;
