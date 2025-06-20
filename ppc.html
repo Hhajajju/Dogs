@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visit site</title>
@@ -14,103 +11,95 @@
    
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    text-align: left;
-}
-
-h1, h2, p {
-    margin: 20px 0;
-}
-
-.medal-icon {
-    width: 80%;
-    margin: 20px 0;
-}
-
-.progress-bar {
-    width: 80%;
-    background-color: #555;
-    height: 18px;
-    margin: 20px auto;
-    border-radius: 5px;
-}
-
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000000;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-.nav-item {
-    color: #fff;
-    text-decoration: none;
-    font-size: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-item i {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.nav-item span {
-    font-size: 10px;
-}
-
-
-.task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #000000;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.task-icon {
-    width: 40px;
-    margin-right: 10px;
-}
-.task p {
-    font-size: 11px;
-}
-.task button {
-    shape-margin: 0cap;
-    color: #000000;
-    background-color: rgb(255, 255, 255);
-}
-
-.hidden {
-    display: none;
-}
-
-        body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #000; 
-            color: #fff; 
+            background-color: #000;
+            color: #fff;
             margin: 0;
             padding: 0;
+            text-align: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            text-align: left;
+        }
+
+        h1, h2, p {
+            margin: 20px 0;
+        }
+
+        .medal-icon {
+            width: 80%;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 80%;
+            background-color: #555;
+            height: 18px;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #000000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item span {
+            font-size: 10px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #000000;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .task-icon {
+            width: 40px;
+            margin-right: 10px;
+        }
+        
+        .task p {
+            font-size: 11px;
+        }
+        
+        .task button {
+            shape-margin: 0cap;
+            color: #000000;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .hidden {
+            display: none;
         }
 
         #balance-container {
@@ -129,9 +118,9 @@ h1, h2, p {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #000000; 
+            border: 1px solid #000000;
             border-radius: 12px;
-            background-color: #333030; 
+            background-color: #333030;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
             width: 80%;
@@ -174,7 +163,7 @@ h1, h2, p {
         }
 
         .task-button {
-            background-color: #ffffff; 
+            background-color: #ffffff;
             color: rgb(0, 0, 0);
             border: none;
             padding: 10px 20px;
@@ -187,14 +176,16 @@ h1, h2, p {
         .task-button:hover {
             background-color: #a2aaa0;
         }
+        
         .tasks.scrollable {
-            max-height: 590px; 
-            overflow-y: auto; 
+            max-height: 590px;
+            overflow-y: auto;
             margin: 20px auto;
-            width: 90%;       
+            width: 90%;
             padding-right: 10px;
-            border: 1px solid #000000; 
+            border: 1px solid #000000;
         }
+        
         @media (max-width: 600px) {
             .task-container {
                 max-width: 100%;
@@ -207,189 +198,118 @@ h1, h2, p {
 
             .task h4 {
                 font-size: 16px;
-     body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    text-align: left;
-}
-
-h1, h2, p {
-    margin: 20px 0;
-}
-
-.medal-icon {
-    width: 80%;
-    margin: 20px 0;
-}
-
-.progress-bar {
-    width: 80%;
-    background-color: #555;
-    height: 18px;
-    margin: 20px auto;
-    border-radius: 5px;
-}
-
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000000;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-.nav-item {
-    color: #fff;
-    text-decoration: none;
-    font-size: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-item i {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.nav-item span {
-    font-size: 10px;
-}
-
-
-.task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #000000;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.task-icon {
-    width: 40px;
-    margin-right: 10px;
-}
-.task p {
-    font-size: 11px;
-}
-.task button {
-    shape-margin: 0cap;
-    color: #000000;
-    background-color: rgb(255, 255, 255);
-}
-
-.hidden {
-    display: none;
-}
-       }
+            }
         }
 
+        /* Footer Background */
+        footer.footer {
+            display: flex;
+            justify-content: space-between;
+            background-color: black;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
 
-/* Footer Background */
-footer.footer {
-    display: flex;
-    justify-content: space-between;  /* Ensure sections are spaced evenly */
-    background-color: black;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    z-index: 1000;
-    flex-wrap: wrap; /* Allow wrapping if the screen is very narrow */
-}
+        /* Style for each section */
+        footer .section {
+            color: white;
+            text-align: center;
+            font-size: 14px;
+            flex: 1;
+            padding: 5px;
+            min-width: 100px;
+        }
 
-/* Style for each section */
-footer .section {
-    color: white;
-    text-align: center;
-    font-size: 14px;
-    flex: 1;  /* Ensures each section takes equal space */
-    padding: 5px;
-    min-width: 100px;  /* Ensures each section has a minimum width */
-}
+        /* Style for icons */
+        footer .section i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
 
-/* Style for icons */
-footer .section i {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
+        /* Style for text below the icons */
+        footer .section span {
+            display: block;
+            font-size: 12px;
+        }
 
-/* Style for text below the icons */
-footer .section span {
-    display: block;
-    font-size: 12px;
-}
+        /* Hover Effect */
+        footer .section:hover {
+            color: #FFD700;
+        }
 
-/* Hover Effect */
-footer .section:hover {
-    color: #FFD700;  /* Gold color for hover effect */
-}
+        footer .section:hover i {
+            color: #FFD700;
+        }
 
-footer .section:hover i {
-    color: #FFD700;  /* Gold color for icons on hover */
-}
+        /* Make sure the logo appears centered at the top */
+        img {
+            display: block;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
 
-/* Make sure the logo appears centered at the top */
-img {
-    display: block;
-    margin: 0 auto;
-    padding: 20px 0;
-}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            footer.footer {
+                justify-content: space-around;
+            }
 
-/* Responsive Design: Adjust for smaller screens while keeping items horizontally aligned */
-@media (max-width: 768px) {
-    footer.footer {
-        justify-content: space-around;  /* Space items more evenly on smaller screens */
-    }
+            footer .section {
+                font-size: 16px;
+                padding: 10px 5px;
+            }
 
-    footer .section {
-        font-size: 16px;
-        padding: 10px 5px;
-    }
+            footer .section i {
+                font-size: 30px;
+            }
 
-    footer .section i {
-        font-size: 30px;  /* Larger icons on small screens */
-    }
-
-    footer .section span {
-        font-size: 14px;
-    }
-}
+            footer .section span {
+                font-size: 14px;
+            }
+        }
         
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            color: #000;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .notification button {
+            padding: 10px 20px;
+            border: none;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
     </style>
 </head>    
 <body>
-   
-
     <div id="balance-container">
         <h2><b>_____________</b></h2>
-
         <h2><b> Visit site</b></h2>
-    
-        <span id="balance">0</span>  Total Ton
+        <span id="balance">0</span> Total Ton
     </div>
     <h2><b>_______________</b></h2>
 
     <section class="tasks scrollable">
-
-      <div class="task-container">
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -403,10 +323,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://vocal.media/gamers/how-to-get-free-robux-vhaen098z')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://vocal.media/gamers/how-to-get-free-robux-vhaen098z', this)">🦴 visit</button>
             </div>
+        </div>
            
-               <div class="task-container">
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -420,10 +341,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
+        </div>
                  
-             <div class="task-container">
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -437,9 +359,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-               <div class="task-container">
+        </div>
+               
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -453,9 +377,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-                 <div class="task-container">
+        </div>
+                 
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -469,10 +395,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
+        </div>
                    
-                   <div class="task-container">
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -486,9 +413,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-                     <div class="task-container">
+        </div>
+                     
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -502,9 +431,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-                      <div class="task-container">
+        </div>
+                      
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -518,9 +449,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-                        <div class="task-container">
+        </div>
+                        
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -534,9 +467,11 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-                         <div class="task-container">
+        </div>
+                         
+        <div class="task-container">
             <div class="task">
                 <div class="task-detail">
                     <div class="task-image">
@@ -550,52 +485,138 @@ img {
                         </div>
                     </div>
                 </div>
-                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs')">🦴 visit</button>
+                <button class="task-button" onclick="completeTask(0.001, 'https://t.me/claim_dogs', this)">🦴 visit</button>
             </div>
-                           
-                                                   
-                    </section>
+        </div>
+    </section>
 
-
-        <nav class="bottom-nav">
-            <a href="home.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>HOME</span>
-            </a>
-            <a href="contest.html" class="nav-item">
-                <i class="fas fa-trophy"></i>
-                <span>CONTEST</span>
-            </a>
-            <a href="invite-friends.html" class="nav-item">
-                <i class="fas fa-user-friends"></i>
-                <span>FRIENDS</span>
-            </a>
-            <a href="earn.html" class="nav-item">
-                <i class="fas fa-tasks"></i>
-                <span>EARN</span>
-            </a>
-            </a>
-            <a href="tasks.html" class="nav-item">
-                <i class="fas fa-tasks"></i>
-                <span>TASKS</span>
-            </a>
-
-
-</a>
-            <a href="ppc.html" class="nav-item">
-                <i class="fas fa-tasks"></i>
-                <span>PPC</span>
-            </a>
-
-            <a href="balance.html" class="nav-item">
-                <i class="fas fa-wallet"></i>
-                <span>BALANCE</span></span>
-            </a>
-
-
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>HOME</span>
+        </a>
+        <a href="contest.html" class="nav-item">
+            <i class="fas fa-trophy"></i>
+            <span>CONTEST</span>
+        </a>
+        <a href="invite-friends.html" class="nav-item">
+            <i class="fas fa-user-friends"></i>
+            <span>FRIENDS</span>
+        </a>
+        <a href="earn.html" class="nav-item">
+            <i class="fas fa-tasks"></i>
+            <span>EARN</span>
+        </a>
+        <a href="tasks.html" class="nav-item">
+            <i class="fas fa-tasks"></i>
+            <span>TASKS</span>
+        </a>
+        <a href="ppc.html" class="nav-item">
+            <i class="fas fa-tasks"></i>
+            <span>PPC</span>
+        </a>
+        <a href="balance.html" class="nav-item">
+            <i class="fas fa-wallet"></i>
+            <span>BALANCE</span>
+        </a>
     </nav>          
             
-  <script src="material/js/js.js"></script>
-  <script src="material/js/main.js"></script>               
+    <script>
+        // Initialize Telegram Web App
+        Telegram.WebApp.ready();
+        
+        // Initialize balance from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize balance to 0 if not exists
+            if (localStorage.getItem('tonBalance') === null) {
+                localStorage.setItem('tonBalance', '0');
+            }
+            
+            const savedBalance = parseFloat(localStorage.getItem('tonBalance')) || 0;
+            document.getElementById('balance').textContent = savedBalance.toFixed(3);
+        });
+
+        // Global cooldown tracker
+        const taskCooldowns = new Map();
+        
+        function completeTask(rewardAmount, url, button) {
+            const taskId = url; // Use URL as task ID
+            
+            // Check cooldown from localStorage
+            const lastCompletion = localStorage.getItem(`taskCooldown_${taskId}`);
+            const now = Date.now();
+            const cooldown = 60000; // 60 seconds cooldown
+            
+            if (lastCompletion && (now - parseInt(lastCompletion) < cooldown)) {
+                const remaining = Math.ceil((cooldown - (now - parseInt(lastCompletion))) / 1000);
+                alert(`Please wait ${remaining} seconds before visiting this site again.`);
+                return;
+            }
+
+            // Start cooldown immediately
+            startCooldown(button, 60);
+            localStorage.setItem(`taskCooldown_${taskId}`, now.toString());
+            
+            // Open the URL in new tab
+            window.open(url, '_blank');
+            
+            // Process reward after a short delay (simulating visit completion)
+            setTimeout(() => {
+                processReward(rewardAmount);
+                showNotification(`+${rewardAmount.toFixed(3)} TON earned for visiting site!`);
+            }, 2000);
+        }
+        
+        function startCooldown(button, seconds) {
+            button.disabled = true;
+            let remaining = seconds;
+            updateButtonText(button, remaining);
+            
+            const interval = setInterval(() => {
+                remaining--;
+                updateButtonText(button, remaining);
+                
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    button.disabled = false;
+                    button.textContent = "🦴 visit";
+                }
+            }, 1000);
+            
+            // Store interval reference for cleanup
+            taskCooldowns.set(button, interval);
+        }
+        
+        function updateButtonText(button, seconds) {
+            button.textContent = seconds > 0 ? `Wait ${seconds}s` : "🦴 visit";
+        }
+        
+        function processReward(amount) {
+            const balance = parseFloat(localStorage.getItem('tonBalance')) || 0;
+            const newBalance = balance + amount;
+            localStorage.setItem('tonBalance', newBalance.toFixed(3));
+            document.getElementById('balance').textContent = newBalance.toFixed(3);
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <p>${message}</p>
+                <button onclick="this.parentNode.remove()">OK</button>
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+    </script>
+    
+    <script src="material/js/js.js"></script>
+    <script src="material/js/main.js"></script>               
 </body>
 </html>
