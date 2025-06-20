@@ -1,10 +1,15 @@
-// Initialize balance from localStorage or set to 0 if not exists
+// Initialize balance
 let balance = 0;
 
 // Load balance when page loads
 function loadBalance() {
+    // Explicitly initialize balance to 0 if not exists
+    if (localStorage.getItem('balance') === null) {
+        localStorage.setItem('balance', '0');
+    }
+    
     const storedBalance = localStorage.getItem('balance');
-    balance = storedBalance !== null ? parseInt(storedBalance) : 0;
+    balance = parseFloat(storedBalance) || 0; // Use parseFloat instead of parseInt for decimal support
     updateBalance();
 }
 
@@ -12,7 +17,7 @@ function loadBalance() {
 function updateBalance() {
     const balanceElement = document.getElementById('balance');
     if (balanceElement) {
-        balanceElement.textContent = balance;
+        balanceElement.textContent = balance.toFixed(3); // Show 3 decimal places for TON
     }
     // Save to localStorage whenever we update
     localStorage.setItem('balance', balance.toString());
@@ -24,23 +29,24 @@ function showAlert(message) {
 }
 
 // Handle ad button click and cooldown
-function handleAdClick(button, rewardAmount = 10) {
+function handleAdClick(button, rewardAmount = 0.001) { // Changed to 0.001 TON as more realistic amount
     const lastAdTime = parseInt(localStorage.getItem('lastAdTime')) || 0;
     const currentTime = Date.now();
     const cooldown = 60 * 1000; // 60 seconds cooldown
 
+    // Check cooldown
     if (currentTime - lastAdTime < cooldown) {
         const remainingTime = Math.ceil((cooldown - (currentTime - lastAdTime)) / 1000);
         showAlert(`Please wait ${remainingTime} seconds before watching the ad again.`);
         return;
     }
 
+    // Store click time immediately
+    localStorage.setItem('lastAdTime', currentTime.toString());
+    
     // Update balance
     balance += rewardAmount;
-    updateBalance(); // This will save to localStorage
-
-    // Save the current time as last ad watch time
-    localStorage.setItem('lastAdTime', currentTime.toString());
+    updateBalance();
 
     // Disable button and start countdown
     if (button) {
@@ -55,7 +61,7 @@ function handleAdClick(button, rewardAmount = 10) {
             } else {
                 clearInterval(intervalId);
                 button.disabled = false;
-                button.textContent = "ðŸ¦´ Claim";
+                button.textContent = "🦴 Claim"; // Fixed emoji display
             }
         }, 1000);
     }
@@ -65,11 +71,11 @@ function handleAdClick(button, rewardAmount = 10) {
 document.addEventListener('DOMContentLoaded', function() {
     loadBalance();
     
-    // Add click event to your ad button (make sure it exists)
-    const adButton = document.getElementById('adButton'); // replace with your button's ID
+    // Add click event to ad button
+    const adButton = document.getElementById('adButton');
     if (adButton) {
         adButton.addEventListener('click', function() {
-            handleAdClick(this);
+            handleAdClick(this, 0.001); // Pass the reward amount explicitly
         });
     }
 });
